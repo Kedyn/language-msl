@@ -1,7 +1,22 @@
 # mIRC Script Language Syntax for Linguist
 
-This was a clone of [Kedyn/vscode-mirc](https://github.com/Kedyn/vscode-mirc) which is a fork of [lol2k/vscode-mirc](https://github.com/lol2k/vscode-mirc).
+A repository dedicated to add mSL support to [Linguist](https://github.com/github/linguist/).
 
-I am attempting to add msl support to [Linguist](https://github.com/github/linguist/) and for some reason, the grammar checker keeps going back to the original source which has errors. So I cloned the 'updated' repo and am trying to fix things up.
+## Features
 
-Both source repos are under MIT license so afaik I can do this.
+- mIRC syntax support
+- AdiIRC syntax support (WIP)
+
+## Authors and acknowledgment
+
+This started as clone of [Kedyn/vscode-mirc](https://github.com/Kedyn/vscode-mirc), which is a fork of [lol2k/vscode-mirc](https://github.com/lol2k/vscode-mirc), and it was put together by [gen-angry](https://github.com/gen-angry).
+
+The current grammar is a reflection of [mIRC-Scripters/mSL-VSCode-Extension](https://github.com/mIRC-Scripters/mSL-VSCode-Extension)'s grammar.
+
+## Development and Contibution
+
+All contributions are welcome. As previously mentioned the current grammar taken from [mIRC-Scripters/mSL-VSCode-Extension](https://github.com/mIRC-Scripters/mSL-VSCode-Extension), so we would appreciate if you head over there to help add mSL support to both Liguist and VSCode. Thank you!
+
+## License
+
+This project is made available under the MIT License.
