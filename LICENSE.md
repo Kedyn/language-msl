@@ -1,5 +1,6 @@
 MIT License
 
+Copyright (c) 2020 mIRC-Scripters
 Copyright (c) 2017 lol2k
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

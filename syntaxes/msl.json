@@ -1,567 +1,788 @@
 {
-    "uuid": "be41aef0-b40b-426f-b680-c670edfb6263",
-    "name": "mIRC",
-    "scopeName": "source.mrc",
-    "fileTypes": ["mrc"],
-    "patterns": [
-        {"include": "#comments"},
-        {"include": "#function-definitions"},
-        {"include": "#variable-assignments"},
-        {"include": "#statements"},
-        {"include": "#labels"},
-        {"include": "#keywords"},
-        {"include": "#commands"},
-        {"include": "#identifiers"},
-        {"include": "#variables"},
-        {"include": "#constants"},
-        {"include": "#punctuation"}
-    ],
-    "repository": {
-        "comments": {
-            "patterns": [
-                {
-                    "name": "comment.block.mrc",
-                    "begin": "(?:^|(?<=\\s))(/\\*)",
-                    "beginCaptures": {
-                        "1": {"name": "punctuation.definition.comment.slash-star.mrc"}
-                    },
-                    "end": "(\\*/)",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.definition.comment.star-slash.mrc"}
-                    }
-                },
-                {
-                    "name": "comment.line.mrc",
-                    "match": "(?:^|(?<=\\s));.*",
-                    "captures": {
-                        "1": {"name": "punctuation.definition.comment.semicolon.mrc"}
-                    }
-                }
-            ]
-        },
-        "function-definitions": {
-            "patterns": [
-                {
-                    "match": "^(?i)^(alias)\\s+(?:-l\\s+)?(\\w+)\\s+(?={)",
-                    "captures": {
-                        "1": {"name": "storage.type.alias.mrc"},
-                        "2": {"name": "entity.name.function.mrc"}
-                    }
-                },
-                {
-                    "begin": "(?i)^(dialog)\\s+(?:-l\\s+)?(\\w+)\\s+({)",
-                    "beginCaptures": {
-                        "1": {"name": "storage.type.dialog.mrc"},
-                        "2": {"name": "entity.name.section.dialog.mrc"},
-                        "3": {"name": "punctuation.bracket.curly.begin.mrc"}
-                    },
-                    "end": "(})",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.curly.end.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#comments"},
-                        {
-                            "match": "(?i)^\\s*(title|icon|size|option|text|edit|button|check|radio|box|scroll|list|combo|link|tab|menu|item)\\s+",
-                            "captures": {
-                                "1": {"name": "entity.name.tag.mrc"}
-                            }
-                        },
-                        {"include": "#strings"},
-                        {"include": "#identifiers"},
-                        {"include": "#variables"},
-                        {"include": "#constants"},
-                        {
-                            "name": "punctuation.separator.delimiter.mrc",
-                            "match": ","
-                        }
-                    ]
-                },
-                {
-                    "match": "(?i)^(menu)\\s+(channel|menubar|nicklist|query|status|@\\w+)(,(channel|menubar|nicklist|query|status|@\\w+))*\\s+(?={)",
-                    "captures": {
-                        "1": {"name": "storage.type.menu.mrc"}
-                    }
-                },
-                {
-                    "name": "entity.name.class.mrc",
-                    "match": "(?i)^(raw)\\s+.+:.+:"
-                },
-                {
-                    "name": "entity.name.class.mrc",
-                    "match": "(?i)^(on)\\s+.+:(ACTION|ACTIVE|AGENT|APPACTIVE|BAN|CHAT|CLOSE|CONNECT(?:FAIL)?|CTCPREPLY|DCCSERVER|DE(HELP|OP|VOICE)|DIALOG|DISCONNECT|DNS|ERROR|EXIT|FILERCVD|FILESENT|GETFAIL|HELP|HOTLINK|INPUT|INVITE|JOIN|KEY(DOWN|UP)|KICK|LOAD|LOGON|MIDIEND|MODE|MP3END|NICK|NOSOUND|NOTICE|NOTIFY|OP|OPEN|PARSELINE|PART|PING|PLAYEND|PONG|QUIT|RAWMODE|SENDFAIL|SERV(?:ERMODE|EROP)?|SIGNAL|SNOTICE|SOCK(CLOSE|LISTEN|OPEN|READ|WRITE)|START|TABCOMP|TEXT|TOPIC|UDPREAD|UN(BAN|LOAD|NOTIFY)|USERMODE|WALLOPS|WAVEEND|VCMD|VOICE):(.+:)*"
-                }
-            ]
-        },
-        "variable-assignments": {
-            "patterns": [
-                {
-                    "match": "(?i)(?:(?:^|(?<=[|{)]|else)\\s)\\s*((/*)!?var(\\s-g)?)?|(,)\\s+)\\s*((%)\\w+)(?:\\s+(=)\\s+)?",
-                    "captures": {
-                        "1": {"name": "storage.type.mrc"},
-                        "2": {"name": "punctuation.definition.command.mrc"},
-                        "3": {"name": "punctuation.separator.delimiter.mrc"},
-                        "4": {"name": "variable.other.normal.mrc"},
-                        "5": {"name": "variable.global.set.mrc"},
-                        "6": {"name": "meta.punctuation.definition.variable.other.normal.mrc"},
-                        "7": {"name": "keyword.operator.assignment.mrc"}
-                    }
-                },
-                {
-                    "match": "(?i)(?:^|(?<=[|{)]|else)\\s)\\s*((/*)set)(?:\\s+\\-[a-z]+)?\\s+((%)\\w+)\\s",
-                    "captures": {
-                        "1": {"name": "storage.type.mrc"},
-                        "2": {"name": "punctuation.definition.command.mrc"},
-                        "3": {"name": "variable.other.normal.mrc"},
-                        "4": {"name": "meta.punctuation.definition.variable.other.normal.mrc"}
-                    }
-                }
-            ]
-        },
-        "statements": {
-            "patterns": [
-                {
-                    "name": "meta.conditional.statement.mrc",
-                    "begin": "(?ix:(?:^|(?<=[{}]\\s))\\s*(if|while)\\s+(\\() | (?:^|(?<=}\\s))\\s*(elseif)\\s+(\\())",
-                    "beginCaptures": {
-                        "1": {"name": "keyword.control.conditional.mrc"},
-                        "2": {"name": "punctuation.bracket.round.begin.mrc"},
-                        "3": {"name": "keyword.control.conditional.mrc"},
-                        "4": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#statements-content"},
-                        {"include": "#statements-recurse"}
-                    ]
-                },
-                {
-                    "match": "(?i)(?:^|(?<=}\\s))\\s*(else)(?=\\s)",
-                    "captures": {
-                        "1": {"name": "keyword.control.conditional.mrc"}
-                    }
-                }
-            ]
-        },
-        "statements-recurse": {
-            "patterns": [
-                {
-                    "begin": "(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#statements-content"},
-                        {"include": "#statements-recurse"}
-                    ]
-                }
-            ]
-        },
-        "statements-content": {
-            "patterns": [
-                {"include": "#comments"},
-                {"include": "#identifiers"},
-                {"include": "#variables"},
-                {"include": "#constants"},
-                {"include": "#comparison-operators"}
-            ]
-        },
-        "comparison-operators": {
-            "patterns": [
-                {
-                    "name": "keyword.operator.comparison.mrc",
-                    "match": "===?|[!<>]=|<|>|//|\\\\|is(?:in(?:cs)?|wm(?:cs)?|num|letter|alnum|alpha|lower|upper|on|op|hop|voice|reg|chan|ban|invite|except|aop|avoice|ignore|protect|notify)"
-                },
-                {
-                    "name": "keyword.operator.logical.mrc",
-                    "match": "!|&&?|\\|\\|"
-                }
-            ]
-        },
-        "arithmetic-operators": {
-            "patterns": [
-                {
-                    "name": "keyword.operator.arithmetic.mrc",
-                    "match": "[+\\-/*^%]"
-                }
-            ]
-        },
-        "keywords": {
-            "patterns": [
-                {
-                    "match": "(?:^|(?<=[|{)]|else)\\s)\\s*(/*!?(?i:break|continue|goto|halt(?:def)?|return))\\b",
-                    "captures": {
-                        "1": {"name": "keyword.control.flow.mrc"}
-                    }
-                }
-            ]
-        },
-        "commands": {
-            "patterns": [
-                {
-                    "comment": "built-in commands (-timer/var/set)",
-                    "match": "(?:^|(?<=[|{)]|else)\\s)\\s*((/*)(?:(!)(\\.)?|(\\.)(!)?)?!?(?i:abook|ajinvite|alias|aline|ame|amsg|anick|aop|auser|autojoin|away|avoice|background|ban|bcopy|beep|bindip|bread|breplace|bset|btrunc|bunset|bwrite|channel|clear(?:all)?|cline|clipboard|close|cnick|color|com(?:close|list|open|reg)|copy|creq|ctcreply|ctcps|dcc|ddcserver|dde|ddeserver|debug|dec|describe|dialog|did|didtok|disable|disconnect|dlevel|dline|dll|dns|dqwindow|draw(?:copy|dot|fill|line|pic|rect|replace|rot|save|size|scroll|text)|ebeeps|echo|editbox|emailaddr|enable|events|exit|fclose|filter|findtext|firewall|flash|flist|flood|flush|flushini|font|fopen|fseek|fsend|fserve|fullname|fwrite|ghide|gload|gmove|gopts|gplay|gpoint|gqreq|groups|gshow|gsize|gstop|gtalk|gunload|guser|hadd|hdec|hdel|help|hfree|hinc|hload|hmake|hop|hsave|ial(?:clear|mark)?|identd|ignore|iline|inc|invite|iuser|join|kick|linesep|links|list|load(?:buf)?|localinfo|log|logview|mdi|me|menubar|mkdir|mnick|mode|msg|nick|noop|notice|notify|omsg|onotice|part|partall|pdcc|perform|play|playctrl|pop|protect|proxy|pvoice|qme|qmsg|query|queryrn|quit|raw|reload|remini|remote|remove|rename|renwin|reseterror|resetidle|rlevel|rline|rmdir|run|ruser|save(?:buf|ini)?|say|scid|scon|server|showmirc|signal|sline|sock(?:accept|close|list|listen|mark|open|pause|read|rename|udp|write)|sound|speak|splay|sreq|strip|switchbar|timestamp|tip|tips|titlebar|tnick|tokenize|toolbar|topic|tray|treebar|ulist|unload|unset|unsetall|updatenl|url|uwho|vc(?:add|md|rem)|whois|window|winhelp|vol|write|writeini))(?=\\s)",
-                    "captures": {
-                        "1": {"name": "support.function.command.default.mrc"},
-                        "2": {"name": "punctuation.definition.command.mrc"},
-                        "3": {"name": "meta.keyword.operator.command.default.mrc"},
-                        "4": {"name": "meta.keyword.operator.command.silent.mrc"},
-                        "5": {"name": "meta.keyword.operator.command.silent.mrc"},
-                        "6": {"name": "meta.keyword.operator.command.default.mrc"}
-                    }
-                },
-                {
-                    "comment": "/timer",
-                    "match": "(?:^|(?<=[|{)]|else)\\s)\\s*((/*)(?:(!)(\\.)?|(\\.)(!)?)?(?i:timer))(\\w+)?(?=\\s)",
-                    "captures": {
-                        "1": {"name": "support.function.command.default.mrc"},
-                        "2": {"name": "punctuation.definition.command.mrc"},
-                        "3": {"name": "meta.keyword.operator.command.default.mrc"},
-                        "4": {"name": "meta.keyword.operator.command.silent.mrc"},
-                        "5": {"name": "meta.keyword.operator.command.silent.mrc"},
-                        "6": {"name": "meta.keyword.operator.command.default.mrc"}
-                    }
-                },
-                {
-                    "comment": "custom aliases (that are preceeded by /)",
-                    "match": "(?:^|(?<=[|{)]|else)\\s)\\s*((/+)(\\.)?\\w+)(?=\\s)",
-                    "captures": {
-                        "1": {"name": "entity.name.function.command.custom.mrc"},
-                        "2": {"name": "punctuation.definition.command.mrc"},
-                        "3": {"name": "meta.keyword.operator.command.silent.mrc"}
-                    }
-                }
-            ]
-        },
-        "identifiers": {
-            "patterns": [
-                {
-                    "comment": "$null $true $false $pi $crlf ...",
-                    "name": "constant.language.mrc",
-                    "match": "(\\$~?)(!)?(?i:true|false|null|pi|crlf|cr|lf)\\b",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "2": {"name": "meta.keyword.operator.identifier.default.mrc"}
-                    }
-                },
-                {
-                    "comment": "$$?= $?*= $?!= $?",
-                    "name": "keyword.operator.input-prompt.mrc",
-                    "match": "(\\$)(\\$)?~?\\?(?:[*!]?(?==))?",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "2": {"name": "meta.punctuation.definition.identifier.mrc"}
-                    }
-                },
-                {
-                    "comment": "$$0 $1- $2-3 $?4",
-                    "name": "support.type.parameter.mrc",
-                    "match": "(\\$)(\\$)?~?(?:\\d+(?:-\\d+|-)?|\\?\\d+)(?!\\w)",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "2": {"name": "meta.punctuation.definition.identifier.mrc"}
-                    }
-                },
-                {
-                    "comment": "$ifmatch $v1 $v2 $!",
-                    "name": "support.type.prev-result.mrc",
-                    "match": "(\\$~?)(?:!|!?(?i:ifmatch|v[12]))\\b",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.identifier.mrc"}
-                    }
-                },
-                {
-                    "comment": "$() $+()",
-                    "begin": "((\\$~?)\\+?)(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "support.function.identifier.default.mrc"},
-                        "2": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "3": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#identifiers-content"},
-                        {"include": "#identifiers-recurse"}
-                    ]
-                },
-                {
-                    "comment": "$+ $&",
-                    "name": "keyword.operator.string.mrc",
-                    "match": "(\\$~?)[&+]\\B",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.identifier.mrc"}
-                    }
-                },
-                {
-                    "begin": "((\\$~?)(!)?iif)(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "support.function.identifier.default.mrc"},
-                        "2": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "3": {"name": "meta.keyword.operator.identifier.default.mrc"},
-                        "4": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))((\\.)\\w+)?",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"},
-                        "2": {"name": "support.function.identifier.default.property.mrc"},
-                        "3": {"name": "meta.punctuation.definition.identifier.property.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#identifiers-iif-content"},
-                        {"include": "#identifiers-iif-recurse"}
-                    ]
-                },
-                {
-                    "begin": "((\\$~?)(!)?calc)(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "support.function.identifier.default.mrc"},
-                        "2": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "3": {"name": "meta.keyword.operator.identifier.default.mrc"},
-                        "4": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))((\\.)\\w+)?",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"},
-                        "2": {"name": "support.function.identifier.default.property.mrc"},
-                        "3": {"name": "meta.punctuation.definition.identifier.property.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#identifiers-calc-content"},
-                        {"include": "#identifiers-calc-recurse"}
-                    ]
-                },
-                {
-                    "comment": "$and() $file() $regex() $window() ...",
-                    "begin": "((\\$~?)(!)?(?i:abook|abs|acos|address|addtok|agent|alias|and|ansi2mirc|aop|asc|asctime|asin|atan2?|avoice|base|bfind|bindip|bitoff|biton|bvar|bytes|cb|ceil|chan|chat|chr|click|cnick|color|com(?:call|chan|val)?|compress|cosh?|count|countcs|crc|ctime|dccignore|dde|decode|decompress|deltok|dialog|did(?:reg|tok|wm)?|disk|dll|dllcall|dns|duration|editbox|encode|eval|exists|fgetc|file|find(?:dir|file|tok)|fline|floor|fopen|fread|fserve|get(?:dot|tok)?|group|hash|height|hfind|hget|highlight|hypot|ial|ialchan|ibl|iel|ignore|iil|inellipse|ini|inpoly|input|inrect|inroundrect|instok|int|intersect|iptype|isalias|isbit|isdde|isdir|isfile|islower|istok|istokcs|isupper|left|len|level|line|lines|link|lock|log|log10|longfn|longip|lower|mask|matchtok|matchtokcs|md5|mid|mk(?:fn|logfn|nickfn)|mode|msfile|nick|nofile|nopath|noqt|not|notags|notify|numtok|onpoly|or|ord|pic|play|portfree|pos|poscs|protect|puttok|qt|query|rand|read|readini|reg(?:ex|ml|mlex|sub|subex)|remove|removecs|remtok|remtokcs|replacex?|replacex?cs|reptok|reptokcs|rgb|right|round|scid|scon|script|sdir|send|server|sfile|sha1|shortfn|sin|sline|snick|sock|sorttok|sorttokcs|sound|speak|sqrt|str|strip|style|submenu|tanh?|timer|tip|toolbar|trust|ulist|upper|uptime|var|vcmd|width|wildtok|wildtokcs|window|vol|wrap|xor))(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "support.function.identifier.default.mrc"},
-                        "2": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "3": {"name": "meta.keyword.operator.identifier.default.mrc"},
-                        "4": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))((\\.)\\w+)?",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"},
-                        "2": {"name": "support.function.identifier.default.property.mrc"},
-                        "3": {"name": "meta.punctuation.definition.identifier.property.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#identifiers-content"},
-                        {"include": "#identifiers-recurse"}
-                    ]
-                },
-                {
-                    "comment": "$active $me $server $window ...",
-                    "name": "support.type.identifier.default.noargs.mrc",
-                    "match": "(\\$~?)(!)?(?i:active(?:cid|wid)?|address|agent(?:name|stat|ver)|anick|aop|appactive|appstate|away(?:msg|time)?|avoice|banmask|bnick|cb|cd|chan(?:modes|types)?|cid|clevel|cmdbox|cmdline|comerr|compact|creq|ctimer?|ctrlenter|date|day|daylight|dbuh|dbuw|dccignore|dccport|ddename|debug|devent|dlevel|dname|ebeeps|emailaddr|error|event|feof|ferr|filename|filtered|find(?:dirn|filen)|full(?:address|date|name|screen)|getdir|gmt|halted|highlight|hnick|host|hotline|hotlinepos|ial|idle|ignore|inmidi|inpaste|insong|inwave|ip|isid|key(?:char|rpt|val)|knick|lactive(?:cid|wid)?|leftwin(?:cid|wid)?|locked|log(?:dir|stamp|stampfmt)?|ltimer|maddress|matchkey|me|menu(?:bar|context|type)?|mididir|mirc(?:dir|exe|ini)|mnick|mode(?:first|last|spl)|mouse|network|newnick|nick|numeric|online|opnick|os|passivedcc|pi|pnick|port|portable|prefix|prop|protect|rawbytes|rawmsg|readn|remote|result|script(?:dir|line)?|server(?:ip|target)?|show|signal|site|snicks|snotify|sock(?:br|err|name)|sreq|ssl(?:dll|libdll|ready|version)?|status|stripped|switchbar|target|ticks|time|timestamp|timestampfmt|timezone|tips|titlebar|toolbar|treebar|ulevel|url|usermode|vcmd(?:stat|ver)|version|wid|wildsite|window|vnick)\\b",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "2": {"name": "meta.keyword.operator.identifier.default.mrc"}
-                    }
-                },
-                {
-                    "comment": "custom identifiers",
-                    "begin": "((\\$)(!)?\\w+)(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "entity.name.function.identifier.custom.mrc"},
-                        "2": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "3": {"name": "meta.keyword.operator.identifier.default.mrc"},
-                        "4": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))((\\.)\\w+)?",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"},
-                        "2": {"name": "entity.name.function.identifier.custom.property.mrc"},
-                        "3": {"name": "meta.punctuation.definition.identifier.property.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#identifiers-content"},
-                        {"include": "#identifiers-recurse"}
-                    ]
-                },
-                {
-                    "comment": "custom identifiers (no args)",
-                    "name": "entity.name.function.identifier.custom.noargs.mrc",
-                    "match": "(\\$)(!)?\\w+",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.identifier.mrc"},
-                        "2": {"name": "meta.keyword.operator.identifier.default.mrc"}
-                    }
-                }
-            ]
-        },
-        "identifiers-recurse": {
-            "patterns": [
-                {
-                    "begin": "(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#identifiers-content"},
-                        {"include": "#identifiers-recurse"}
-                    ]
-                }
-            ]
-        },
-        "identifiers-content": {
-            "patterns": [
-                {"include": "#identifiers"},
-                {"include": "#variables"},
-                {"include": "#constants"},
-                {
-                    "name": "punctuation.separator.delimiter.mrc",
-                    "match": ","
-                }
-            ]
-        },
-        "identifiers-iif-recurse": {
-            "patterns": [
-                {
-                    "begin": "(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#identifiers-iif-content"},
-                        {"include": "#identifiers-iif-recurse"}
-                    ]
-                }
-            ]
-        },
-        "identifiers-iif-content": {
-            "patterns": [
-                {"include": "#comparison-operators"},
-                {"include": "#identifiers-content"},
-                {"include": "#identifiers-iif-recurse"}
-            ]
-        },
-        "identifiers-calc-recurse": {
-            "patterns": [
-                {
-                    "begin": "(\\()",
-                    "beginCaptures": {
-                        "1": {"name": "punctuation.bracket.round.begin.mrc"}
-                    },
-                    "end": "(\\))",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.round.end.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "#identifiers-calc-content"},
-                        {"include": "#identifiers-calc-recurse"}
-                    ]
-                }
-            ]
-        },
-        "identifiers-calc-content": {
-            "patterns": [
-                {"include": "#identifiers-content"},
-                {"include": "#arithmetic-operators"},
-                {"include": "#identifiers-calc-recurse"}
-            ]
-        },
-        "variables": {
-            "patterns": [
-                {
-                    "name": "variable.other.normal.mrc",
-                    "match": "(%)\\w+",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.variable.other.normal.mrc"}
-                    }
-                },
-                {
-                    "name": "variable.other.binary.mrc",
-                    "match": "(&)\\w+",
-                    "captures": {
-                        "1": {"name": "meta.punctuation.definition.variable.other.binary.mrc"}
-                    }
-                }
-            ]
-        },
-        "constants": {
-            "patterns": [
-                {
-                    "name": "constant.numeric.mrc",
-                    "match": "(?:^|(?<=\\W))(?:-)?\\d+(?:\\.\\d+)?\\b"
-                },
-                {
-                    "name": "meta.constant.other.channel.mrc",
-                    "match": "(?<=[\\s\\[(,:=])#\\w*"
-                },
-                {
-                    "name": "meta.constant.other.window.mrc",
-                    "match": "(?<=[\\s\\[(,:=])@\\w+"
-                }
-            ]
-        },
-        "strings": {
-            "patterns": [
-                {
-                    "name": "string.quoted.double.mrc",
-                    "match": "(\").*?(\")",
-                    "captures": {
-                        "1": {"name": "punctuation.definition.string.begin.mrc"},
-                        "2": {"name": "punctuation.definition.string.end.mrc"}
-                    }
-                }
-            ]
-        },
-        "labels": {
-            "patterns": [
-                {
-                    "name": "entity.name.section.label.mrc",
-                    "match": "(?:^|(?<=[|{)]|else)\\s)\\s*:\\w+"
-                }
-            ]
-        },
-        "punctuation": {
-            "patterns": [
-                {
-                    "name": "punctuation.separator.command.mrc",
-                    "match": "(?<=\\s)\\|(?=\\s)"
-                },
-                {
-                    "name": "punctuation.bracket.square.begin.mrc",
-                    "match": "(?:^|(?<=\\s))\\[(?=\\s)"
-                },
-                {
-                    "name": "punctuation.bracket.square.end.mrc",
-                    "match": "(?<=\\s)\\](?:(?=\\s)|$)"
-                },
-                {
-                    "name": "meta.block.mrc",
-                    "begin": "(?<=\\s)({)(?:(?=\\s)|$)",
-                    "beginCaptures": {
-                        "1": {"name": "punctuation.bracket.curly.begin.mrc"}
-                    },
-                    "end": "(?:^|(?<=\\s))(})(?:(?=\\s)|$)",
-                    "endCaptures": {
-                        "1": {"name": "punctuation.bracket.curly.end.mrc"}
-                    },
-                    "patterns": [
-                        {"include": "$self"}
-                    ]
-                }
-            ]
-        }
+  "uuid": "be41aef0-b40b-426f-b680-c670edfb6263",
+  "name": "mIRC",
+  "scopeName": "source.mrc",
+  "fileTypes": [
+    "mrc"
+  ],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#group"
+    },
+    {
+      "include": "#alias"
+    },
+    {
+      "include": "#menu"
+    },
+    {
+      "include": "#events"
+    },
+    {
+      "include": "#dialog"
     }
+  ],
+  "repository": {
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.numeric.mrc",
+          "match": "(?<=\\x20|^|\\(|,)-?\\d+(\\.\\d+)?(?=\\x20|$|\\)|,)"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "include": "#comment_documentation"
+        },
+        {
+          "include": "#comment_block"
+        },
+        {
+          "include": "#comment_line"
+        }
+      ]
+    },
+    "comment_documentation": {
+      "patterns": [
+        {
+          "comment": "Matches a documentation multi-line comment block.",
+          "name": "comment.block.documentation.mrc",
+          "begin": "^(?:\\x20*)(\\/\\*\\*)$",
+          "end": "^(?:\\x20*)\\*\\/$",
+          "patterns": [
+            {
+              "include": "#documentation_block"
+            }
+          ]
+        }
+      ]
+    },
+    "documentation_block": {
+      "patterns": [
+        {
+          "comment": "Matches tags for SimpleDocumentation v1.0.0.",
+          "match": "(?i)\\x20*\\*\\x20+(@(?:author|command|const(?:ant)?|copyright|deprecated|event|example|experimental|global|identifier|ignore|license|nobadges|param(?:eter)?|arg(?:ument)?|prop|returns?|see|switch|todo|version))\\b",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.mrc"
+            }
+          }
+        }
+      ]
+    },
+    "comment_block": {
+      "patterns": [
+        {
+          "comment": "Matches a regular multi-line comment block.",
+          "name": "comment.block.mrc",
+          "begin": "^(?:\\x20*)\\/\\*",
+          "end": "^(?:\\x20*)\\*\\/$"
+        }
+      ]
+    },
+    "comment_line": {
+      "patterns": [
+        {
+          "comment": "Matches a single line comment.",
+          "name": "comment.line.semicolon.mrc",
+          "begin": "(?<=(?:\\G|\\x20\\|\\x20|^))(?:\\x20*);",
+          "end": "(?=\\z|\\x20+\\|\\x20+[^\\s]|\\x20}|$)"
+        }
+      ]
+    },
+    "group": {
+      "patterns": [
+        {
+          "comment": "Matches a group.",
+          "name": "keyword.other.groupname.mrc",
+          "match": "(?i)^#[^\\s]+ (on|off|end)(?:\\b)"
+        }
+      ]
+    },
+    "alias": {
+      "patterns": [
+        {
+          "comment": "Matches alias declaration.",
+          "name": "meta.alias.code.mrc",
+          "begin": "(?i)^(alias)\\x20+(?:(-l)\\x20+)?(?!-l)([^\\s]+)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.alias.mrc"
+            },
+            "2": {
+              "name": "storage.modifier.alias.mrc"
+            },
+            "3": {
+              "name": "entity.name.function.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        }
+      ]
+    },
+    "code_content": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#variables"
+        },
+        {
+          "include": "#identifiers"
+        },
+        {
+          "include": "#conditionals"
+        },
+        {
+          "include": "#commands"
+        },
+        {
+          "include": "#code_block"
+        }
+      ]
+    },
+    "code_block": {
+      "patterns": [
+        {
+          "name": "meta.code.block.mrc",
+          "begin": "{",
+          "end": "}",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        }
+      ]
+    },
+    "conditionals": {
+      "patterns": [
+        {
+          "comment": "Matches conditionals: if elseif while",
+          "name": "meta.conditional.mrc",
+          "begin": "(?i)(?:(?<=\\x20\\|\\x20|^|\\G)\\x20*(if|elseif|while)|(?:(?<=\\))\\x20+(&&|\\|\\|)))\\x20+(?=\\()",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.conditional.mrc"
+            },
+            "2": {
+              "name": "keyword.control.conditional.mrc"
+            }
+          },
+          "end": "(?=\\)(?:\\x20|$))",
+          "patterns": [
+            {
+              "include": "#conditionals_content"
+            },
+            {
+              "include": "#parameters"
+            }
+          ]
+        },
+        {
+          "comment": "Matches conditional: else",
+          "name": "keyword.control.conditional.mrc",
+          "match": "(?i)(?<=\\x20\\|\\x20|^)\\x20*(else)\\b"
+        }
+      ]
+    },
+    "conditionals_content": {
+      "patterns": [
+        {
+          "comment": "Matches: == < > <= >= // \\ & isin isincs iswm iswmcs isnum isletter isalnum isalpha islower isupper === ison isop ishop isvoice isreg ischan isban isquiet isaop isavoice isignore isprotected isnotify isadmin isowner isquiet isurl",
+          "name": "keyword.operator.mrc",
+          "match": "(?i)((?<=\\x20)!?(?:==?=?|(?:<|>)=?|\\/\\/|\\\\|&|is(?:in(?:cs)?|wm(?:cs)?|(?:al)?num|letter|alpha|(?:low|upp)er|on|(?:a|h)?op|a?voice|reg|chan|ban|quiet|ignore|protected|notify|admin|owner|quiet|url))(?=\\x20|\\))|(?<=\\()!(?=\\$|%|&))"
+        },
+        {
+          "include": "#constants"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "comment": "Matches regular variables, %variable",
+          "name": "variable.other.normal.mrc",
+          "match": "(?<![^(,\\x20!])(%)[^\\x20),]+"
+        },
+        {
+          "comment": "Matches binary variables, &variable",
+          "name": "variable.other.binary.mrc",
+          "match": "(?<![^(,\\x20!])(&)[^\\x20),]+"
+        }
+      ]
+    },
+    "parameters": {
+      "patterns": [
+        {
+          "include": "#variables"
+        },
+        {
+          "include": "#identifiers"
+        },
+        {
+          "include": "#constants"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "include": "#identifiers_params"
+        },
+        {
+          "include": "#identifiers_no_params"
+        }
+      ]
+    },
+    "identifiers_params": {
+      "comment": "Matches identifiers that take parameters.",
+      "patterns": [
+        {
+          "comment": "Identifiers with no props: $+() $abook $abs $acos $cos $date $address $addtok $addtokcs 𝛼$adilang 𝛼$admnick $agent $alias $and $ansi2mirc $aop $asc $asctime $asin $audio $sin $atan $tan $avoice $banlist $base $bfind $bindip $bitoff $biton 𝛼$boldify $bvar $bytes 𝛼$calias $cb $ceil $chan $channel $chat $chr $click $cnick $color $colour $com $comcall $comchan $compress $comval $cos $cosh $count $countcs 𝛼$cpuload $crc $ctime $date $dccignore $dde $decode $decompress 𝛼$decrypt $deltok $dialog $did $didreg $didtok $didwm $sdir $disk 𝛼$diskmenu $dll $dllcall $dns 𝛼$dockpanels 𝛼$download $duration $editbox 𝛼$editboxhistory 𝛼$emoticons $encode 𝛼$encodingmenu 𝛼$encrypt $envvar $eval $evalnext 𝛼$eventtarget 𝛼$exec $exists $fgetc $file $finddir $findfile $findtok $findtokcs $fline $floor $font $fopen $fread $fserv $fserve $get $getdir $getdot $gettok 𝛼$gfx 𝛼$gfxram $gmt $group $hash $height 𝛼$hexcolor $hfind $hget $highlight $hmac $hmatch $hotlink $hotp $hregex $hypot $ial $ialchan $ibl $iel $ignore $iil $inellipse $ini $initopic $inpoly $input $inrect $inroundrect 𝛼$inick 𝛼$insert $instok $int $intersect 𝛼$invitemenu $iptype $iql 𝛼$ircv3caps $isalias $isbit $isdde $isdir $isfile $islower $istok $istokcs $isupper $isutf 𝛼$keylocked $left $len $level $line 𝛼$lineheight $lines $link $lock $lof $log $log10 $longfn $longip 𝛼$loop $lower $maddress $mask $matchtok $matchtokcs $md5 𝛼$menuicon $mid $mkfn $mklogfn $mknickfn $mode $mp3 $msfile $msgtags 𝛼$nadmnick $nhnick $nick $nofile 𝛼$nonick $nopnick $nopath $noqt $not $notags $notify $numtok $nvnick 𝛼$ocolor 𝛼$onick $onpoly $opnick $or $ord $pic $play 𝛼$plugins $portfree $pos $poscs 𝛼$powmod 𝛼$prefixemote 𝛼$prefixuser $puttok $qt $query $r $rand $rands $read $readini $regex $regml $regmlex $regsub $regsubex $remove $removecs $remtok $remtokcs $replace $replacecs $replacex $replacexcs $reptok $reptokcs $rgb $right $rnick $round $samepath $scid $scon 𝛼$screen 𝛼$screenb 𝛼$screenh 𝛼$screenhz 𝛼$screenshot 𝛼$screenw $script $sdir $send $server 𝛼$servervars $sfile $sha1 𝛼$sha2 $sha256 $sha384 $sha512 $shortfn $sinh 𝛼$slapsmenu $sline $snick $sock $sorttok $sorttokcs $sound $speak 𝛼$spellcheck $sqrt 𝛼$statusbar $str $strip $style $submenu $sysdir $tanh $timer $tip $token $toolbar 𝛼$topicbox $totp $trust $ulist $unsafe $upper $uptime $url $urlget $utfdecode $utfencode $var $vc $vcmd $vol $width $wildtok $wildtokcs $window 𝛼$wmiquery $wrap $xor $zip",
+          "begin": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?(\\+|abook|a?cos|abs|date|add(ress|tok(cs)?)|adilang|admnick|agent|alias|and|ansi2mirc|aop|asc(time)?|a?sin|a?tan|avoice|banlist|base|bfind|bindip|bit(off|on)|boldify|bvar|bytes|calias|cb|ceil|chan(nel)?|chat|chr|click|cnick|colou?r|com(call|chan|press|val)?|cosh?|count(cs)?|cpuload|crc|ctime|date|dccignore|dde|decode|decompress|decrypt|deltok|dialog|did(reg|tok|wm)?|disk(menu)?|dll(call)?|dns|dockpanels|download|duration|editbox(history)?|emoticons|encode|encodingmenu|encrypt|envvar|eval(next)?|eventtarget|exec|exists|fgetc|file|find(dir|file|tok(cs)?)|fline|floor|font|fopen|fread|fserve?|get(dir|dot|tok)?|gfx(ram)?|gmt|group|hash|height|hexcolor|hfind|hget|highlight|hmac|hmatch|hnick|hotlink|hotp|hregex|hypot|ial(chan)?|ibl|iel|ignore|iil|inellipse|ini(ck|topic)?|inpoly|input|in(round)?rect|insert|instok|int(ersect)?|invitemenu|iptype|iql|ircv3caps|is(alias|bit|dde|dir|file|lower|tok(cs)?|upper|utf)|keylocked|left|len|level|line(height|s)?|link|lock|lo(f|g(10)?)|long(fn|ip)|loop|lower|maddress|mask|matchtok(cs)?|md5|menuicon|mid|mk(log|nick)?fn|mode|mp3|msfile|msgtags|nadmnick|(nh)?nick|no(file|p?nick|t(ags|ify)?|path|qt)?|numtok|nvnick|ocolor|onpoly|op?nick|ord?|pic|play|plugins|portfree|pos(cs)?|powmod|prefix(emote|user)|puttok|qt|query|r(ands?|ead(ini)?|eg(ex|ml(ex)?|sub(ex)?)|em(ove(cs)?|tok(cs)?)|eplace(cs|x(cs)?)?|eptok(cs)?|gb|ight|ound|nick)?|samepath|scid|scon|screen(b|hz?|shot|w)?|script|sdir|send|server(vars)?|sfile|sha(1|2|256|384|512)|shortfn|sinh|slapsmenu|sline|snick|sock|sorttok(cs)?|sound|speak|spellcheck|sqrt|statusbar|str(ip)?|style|submenu|sysdir|tanh|timer|tip|token|toolbar|topicbox|totp|trust|ulist|unsafe|upper|uptime|url(get)?|utf(de|en)code|var|vc(md)?|vol|width|wildtok(cs)?|window|wmiquery|wrap|xor|zip))\\(",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.identifier.mrc"
+            }
+          },
+          "end": "(?i)\\)(?:\\.([^\\s|\\)|,]+))?",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.other.identifier.property.mrc"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#parameters"
+            }
+          ]
+        },
+        {
+          "comment": "Identifiers: $calc",
+          "begin": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?calc)\\(",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.identifier.mrc"
+            }
+          },
+          "end": "(?i)\\)(?:\\.([^\\s|\\)|,]+))?",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.other.identifier.property.mrc"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#parameters"
+            },
+            {
+              "include": "#calc_content"
+            }
+          ]
+        },
+        {
+          "comment": "Identifiers: $iif",
+          "begin": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?iif)\\(",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.identifier.mrc"
+            }
+          },
+          "end": "(?i)\\)(?:\\.([^\\s|\\)|,]+))?",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.other.identifier.property.mrc"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#conditionals_content"
+            },
+            {
+              "include": "#parameters"
+            }
+          ]
+        },
+        {
+          "comment": "Possible custom identifier",
+          "begin": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?[^\\s(),]+)\\(",
+          "beginCaptures": {
+            "1": {
+              "name": "support.function.name.mrc"
+            }
+          },
+          "end": "(?i)\\)(?:\\.([^\\s|\\)|,]+))?",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.other.identifier.property.mrc"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "calc_content": {
+      "comment": "Matches $calc contents",
+      "patterns": [
+        {
+          "name": "keyword.operator.arithmetic.mrc",
+          "match": "[+\\-*/%^]"
+        },
+        {
+          "name": "meta.arithmetic.mrc",
+          "begin": "(<=\\()",
+          "end": "(?<=\\))",
+          "patterns": [
+            {
+              "include": "#calc_content"
+            }
+          ]
+        }
+      ]
+    },
+    "identifiers_no_params": {
+      "comment": "Matches identifiers that do not take parameters.",
+      "patterns": [
+        {
+          "comment": "Identifiers: $0 $! $* $+ $N-N $active $activecid $activewid $adate 𝛼$adiircdir 𝛼$adiircexe 𝛼$adiircini $address 𝛼$admnick $agentname $agentstat $agentver 𝛼$album $anick $aop $appactive 𝛼$appbits $appstate 𝛼$artist $asctime 𝛼$audio $auto $avoice $away $awaymsg $awaytime $banmask 𝛼$battery 𝛼$batteryp $beta 𝛼$bitrate $bits 𝛼$bname $bnick 𝛼$boldify 𝛼$builddate 𝛼bwdown 𝛼$bwdownb 𝛼$bwname 𝛼$bwrec 𝛼$bwrecb 𝛼$bwsent 𝛼$bwsentb 𝛼$bwspeed 𝛼$bwup 𝛼$bwupb 𝛼$calias $caller $cancel $cb $cd $chan $chanmodes $chantypes $cid $clevel $cmdbox $cmdline $comchar $comerr 𝛼$comment $compact 𝛼$cpucache 𝛼$cpucount 𝛼$cpuident 𝛼$cpuload 𝛼$cpumhz 𝛼$cpuname 𝛼$cpuvendor $cr $creq $crlf $ctime $ctimer $ctrlenter $date $day $daylight $dbuh $dbuw $dccignore $dccport $ddename $debug $devent $did 𝛼$diskfree 𝛼$disktotal $dlevel $dname 𝛼$dock 𝛼$dockpanels 𝛼$dotnet 𝛼$download 𝛼$downloaderr $dqwindow $ebeeps $email $emailaddr $error $event $eventid $eventparms $exiting $false $feof $ferr $filename $filtered $finddirn $findfilen $flinen 𝛼$frequency $fromeditbox $fulladdress $fulldate $fullname $fullscreen 𝛼$fulltitle 𝛼$genre $getdir 𝛼$gfx 𝛼$gfxram 𝛼$globalidle $gmt $halted $highlight $hnick $host $hotline $hotlinepos $iaddress $ial 𝛼$ident $idle $ifmatch $ifmatch2 $ignore $inmidi[.prop] $inmode $inmp3 $inpaste $insong[.prop] $inwave[.prop] $inwho $ip $isadmin $isid 𝛼$iswine 𝛼$kblayout $keychar $keyrpt $keyval $knick $lactive $lactivecid $lactivewid 𝛼$lag 𝛼$layer $leftwin $leftwincid $leftwinwid 𝛼$length $lf $locked $logdir $logstamp $logstampfmt 𝛼$lquitmsg $ltimer $maddress $matchkey $maxlenl $maxlenm $maxlens $me 𝛼$memfree 𝛼$memfreep 𝛼$memtotal $menu $menubar $menucontext $menutype $mididir $mircdir $mircexe $mircini $mnick $modefirst $modelast $modespl 𝛼$motherboard $mouse[.prop] $mp3dir $msgstamp $msgtags 𝛼$msgx 𝛼$muted 𝛼$mversion $naddress $nick 𝛼$nickcolumn $nickmode $network $newnick $no $notify $null $numeric $ok 𝛼$onick $online $onlineserver $onlinetotal $opnick $os 𝛼$osbits 𝛼$osbuild 𝛼$osedition 𝛼$osidle 𝛼$osinstalldate 𝛼$osmajor 𝛼$osminor 𝛼$osname 𝛼$osservicepack 𝛼$osversion $parms $parseline $parsetype $parseutf $passivedcc 𝛼$pcre 𝛼$percentl 𝛼$percentp $pi 𝛼$playcount 𝛼$player 𝛼$playerhandle $pnick $port $portable 𝛼$position $prefix 𝛼$prefixctcp 𝛼$prefixemote 𝛼$prefixsys 𝛼$prefixuser 𝛼$progress $prop $protect 𝛼$quickconnect 𝛼$quitmessage $raddress 𝛼$randomcolors 𝛼$rating $rawbytes $rawmsg 𝛼$rawmsgx $readn 𝛼$realname $regerrstr $remote $result 𝛼$screen 𝛼$screenb 𝛼$screenh 𝛼$screenhz 𝛼$screenw $script 𝛼$scripts $scriptdir $scriptline $server $serverip $servertarget $sfstate $show $signal $site 𝛼$size $snicks $snotify $sockerr $sockbr $sockname 𝛼$song 𝛼$songpath $sreq $ssl 𝛼sslcertremotesha1 𝛼sslcertremotesha256 $sslcertsha1 $sslcertsha256 $sslcertvalid $ssldll $ssllibdll $sslready $sslversion $starting $status 𝛼$statusbar $stripped $switchbar $target $tempfn $ticks $time $timeout $timestamp $timestampfmt $timezone $tips 𝛼$title $titlebar $toolbar 𝛼$topic 𝛼$totaltracks 𝛼$track $treebar $true $ulevel 𝛼$updays 𝛼$updating 𝛼$uphours 𝛼$upmins $url $usermode 𝛼$username $v1 $v2 $vcmdstat $vcmdver $version 𝛼$volume 𝛼$volumeb 𝛼$volumep $vnick $wavedir $wid $wildsite $window 𝛼$year $yes 𝛼$ziperr",
+          "name": "keyword.other.identifier.mrc",
+          "match": "(?<=\\s|\\(!|\\(|\\,|\\.|^)\\$\\$?~?(0|\\!|&(?=$)|\\*|\\+\\+?|[1-9]+(-?([0-9]+)|[^\\s|\\)|,]+)?|active((c|w)id)?|a?date|adiirc(dir([^\\s,)]+)?|exe|ini)|address|admnick|agent(name|stat|ver)|album|anick|aop|app(active|bits|state)|artist|asctime|audio|auto|avoice|away(msg|time)?|banmask|batteryp?|beta|bit(rate|s)|bname|bnick|boldify|builddate|bw(downb?|name|recb?|sentb?|speed|upb?)|cal(ias|ler)|cancel|cb|cd|chan(modes|types)?|cid|clevel|cmd(box|line)|com(char|err|ment|pact)|cpu(cache|count|ident|load|mhz|name|vendor)|cr(eq|lf)?|ctimer?|ctrlenter|day(light)?|dbu(h|w)|dccignore|dccport|ddename|debug|devent|did|disk(free|total)|dlevel|dname|dock(panels)?|dotnet|download(err)?|dqwindow|ebeeps|email(addr)?|error|event(id|parms)?|exiting|false|fe(of|rr)|filename|filtered|find(dirn|filen)|flinen|frequency|fromeditbox|full(address|date|name|screen|title)|genre|getdir|gfx(ram)?|globalidle|gmt|halted|highlight|hnick|host|hotline(pos)?|ia(ddress|l)|ident|idle|ifmatch2?|ignore|in(midi(.(pos|length|fname|pause))?|mode|mp3|paste|song(.(pos|length|fname|pause))?|wave(.(pos|length|fname|pause))?|who)|ip|is(admin|id|wine)|kblayout|key(char|rpt|val)|knick|lactive(cid|wid)?|lag|layer|leftwin(cid|wid)?|length|lf|locked|log(dir|stamp(fmt)?)|lquitmsg|ltimer|maddress|matchkey|max(lenl|lenm|lens)|me|mem(freep?|total)|menu(bar|context|type)?|mididir|mircdir([^\\s,)]+)?|mircexe|mircini|mnick|modefirst|modelast|modespl|motherboard|mouse(.(x|y||mx|my|dx|dy|cx|cy|win|lb|key))?|mp3dir|msg(stamp|tags|x)|muted|mversion|naddress|nick(column|mode)?|network|newnick|no(tify)?|null|numeric|ok|online(server|total)?|op?nick|os(bits|build|edition|idle|installdate|major|minor|name|servicepack|version)?|parms|parse(line|type|utf)|passivedcc|pcre|percent(l|p)|pi|play(count|er(handle)?)|pnick|port(able)?|position|prefix(ctcp|emote|sys|user)?|progress|prop|protect|quickconnect|quitmessage|raddress|randomcolors|rating|raw(bytes|msgx?)|readn|realname|regerrstr|remote|result|screen(b|hz?|w)?|script(dir([^\\s,)]+)?|line|s)?|server(ip|target)?|sfstate|show|signal|site|size|snicks|snotify|sock(err|br|name)|song(path)?|sreq|ssl(cert((remote)?sha(1|256)|valid)|(lib)?dll|ready|version)?|starting|status(bar)?|stripped|switchbar|target|tempfn|ticks|time(out|stamp(fmt)?|zone)|tips|title(bar)?|toolbar|topic|totaltracks|track|treebar|true|ulevel|up(days|dating|hours|mins)|url|user(mode|name)|v1|v2|vcmd(stat|ver)|version|volume(b|p)?|vnick|wavedir|wid|wildsite|window|year|yes|ziperr)(?=\\s|\\)|,)"
+        },
+        {
+          "comment": "Identifiers: $? $dir $hfile $sdir",
+          "match": "(?<=\\s|\\(|\\,|\\.|^)(\\$\\$?~?(?:\\?(?:[^\\s=]+)?|s?dir|hfile))(?:(=)(\"(?:[^\"])*\"))?(?=\\s|\\)|,)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.identifier.mrc"
+            },
+            "2": {
+              "name": "keyword.operator.mrc"
+            },
+            "3": {
+              "name": "string.quoted.double.mrc"
+            }
+          }
+        },
+        {
+          "comment": "Identifiers: =$nick",
+          "name": "keyword.other.identifier.mrc",
+          "match": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\=\\$\\$?~?nick)(?=\\b)"
+        },
+        {
+          "comment": "Possible custom identifier",
+          "name": "support.function.name.mrc",
+          "match": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?[^\\s(),]+)(?=\\b)"
+        }
+      ]
+    },
+    "commands": {
+      "patterns": [
+        {
+          "comment": "Matches commands: /help /winhelp /server /disconnect /join /hop /part /partall /quit /list /links /quote /raw /me /msg /action /privmsg /notice /describe /amsg /ame /query /qme /qmsg /onotice /omsg /vnotice /vmsg /sound /ctcp /dcc /wallchops /wallvoices /uwho /sockaccept /sockclose /socklist /socklisten /sockmark /sockopen /sockpause /sockread /sockrename /sockudp /sockwrite /bread /breplace /bcopy /bset /btrunc /bunset /bwrite /comclose /comlist /comopen /comreg /dialog /did /didtok  /drawcopy /drawdot /drawfill /drawline /drawpic /drawrect /drawreplace /drawrot /drawsave /drawscroll /drawsize /drawtext /fopen /flist /fseek /fwrite /fclose  /aline /cline /dline /iline /rline /sline /clear /clearall /window /ghide /gload /gmove /gopts /gplay /gpoint /gqreq /gshow /gsize /gstop /gtalk /gunload /hadd /hdec /hdel /hfree /hinc /hload /hmake /hsave  /break /continue /else /elseif /goto /halt /haltdef /if /return /returnex /while /dec /inc /set /var /unset /unsetall /auser /dlevel /guser /iuser /rlevel /ulist /flush /ruser /ial /ialclear /ialmark /ialfill /copy /flushini /mkdir /remini /remove /rename /write /writeini /rmdir /aop /avoice /ban /channel /ignore /leave /mode /parseline /pop /protect /pvoice /say /updatenl /abook /ajinvite /alias /anick /autojoin /background /beep /bindip /clipboard /cnick /color /colour /creq /ctcpreply /ctcps /dccserver /dde /ddeserver /debug /disable /dll /dns /dqwindow /ebeeps /exit /echo /editbox /emailaddr /enable /events /filter /findtext /finger /firewall /flash /flood /fnord /font /fsend /fserve /fullname /fupdate /groups /hotlink /identd /linesep /load /loadbuf /localinfo /log /logview /mdi /menubar /mnick /noop /notify /pdcc /perform /play /playctrl /proxy /queryrn /registration /reload /remote /renwin /reseterror /resetidle /run /save /savebuf /saveini /scid /scon /setlayer /showmirc /signal /speak /splay /sreq /strip /switchbar /timer /timestamp /tip /tips /titlebar /tnick /tokenize /toolbar /tray /treebar /unload /url /vcadd /vcmd /vcrem /vol /xyzzy /auto /away /clearial /close /closemsg /timers /username 𝛼/aclear 𝛼/advertise 𝛼/allnick 𝛼/autoconnect 𝛼/aquit 𝛼/back 𝛼/banlist 𝛼/betaup 𝛼/bin2txt 𝛼/bw 𝛼/channels 𝛼/charset 𝛼/config 𝛼/cycleall 𝛼/dehalfop 𝛼/deop 𝛼/desop 𝛼/devoice 𝛼/dock 𝛼/dockpanels 𝛼/download 𝛼/echomonitor 𝛼/echox 𝛼/edit 𝛼/encoding 𝛼/fakeraw 𝛼/fget 𝛼/fullscreen 𝛼/gcmem 𝛼/globalkeys 𝛼/google 𝛼/halfop 𝛼/highlight 𝛼/icon 𝛼/inick 𝛼/inlineimage 𝛼/kblayout 𝛼/lag 𝛼/linemarker 𝛼/lock 𝛼/logs 𝛼/msgbox 𝛼/mute 𝛼/nextunread 𝛼/nickcolumn 𝛼/nicklist 𝛼/nmsg 𝛼/np 𝛼/oline 𝛼/options 𝛼/paths 𝛼/pause 𝛼/pgoogle 𝛼/plugins 𝛼/priv 𝛼/quickconnect 𝛼/quicksave 𝛼/rawx 𝛼/rawlog 𝛼/realname 𝛼/reconnect 𝛼/refreshsong 𝛼/rejoin 𝛼/resolve 𝛼/restart 𝛼/scripts 𝛼/scrolltext 𝛼/search 𝛼/sendkeys 𝛼/serverlist 𝛼/setconfig 𝛼/setoption 𝛼/showadiirc 𝛼/showmenu 𝛼/slap 𝛼/sleep 𝛼/sop 𝛼/statusbar 𝛼/tab 𝛼/themes 𝛼/topicbox 𝛼/usernick 𝛼/txt2bin 𝛼/unban 𝛼/unignore 𝛼/unnotify 𝛼/update 𝛼/vars 𝛼/viewlog 𝛼/voice 𝛼/wdown 𝛼/wjump 𝛼/wnext 𝛼/wpause 𝛼/wplay",
+          "begin": "(?i)(?:\\x20+\\|\\x20+|(?<=else\\x20)|^\\x20*|\\)|\\G)\\x20*(\\/+)?([!|.]{1,2})?((?:win)?help|server|disconnect|join|hop|part|part(?:all)?|quit|list|links|quote|raw|(?:a|q)?me|(?:a|q|o|v|priv)?msg|action|(?:o|v)?notice|describe|query|sound|ctcp|dcc|wall(?:chops|voices)|uwho|sock(?:accept|close|list|listen|mark|open|pause|read|rename|udp|write)|b(?:read|replace|copy|set|trunc|unset|write)|com(?:close|list|open|reg)|dialog|did(?:tok)?|draw(?:copy|dot|fill|line|pic|rect|replace|rot|save|scroll|size|text)|f(?:open|list|seek|write|close)|(?:a|c|d|i|r|s)line|clear(?:all|ial)?|window|g(?:hide|(?:un)?load|move|opts|play|point|qreq|show|size|stop|talk)|h(?:add|dec|del|free|inc|load|make|save)|break|continue|goto|halt(?:def)?|return(?:ex)?|dec|inc|set|var|unset(?:all)|dec|inc|set|var|unset(?:all)?|(?:a|g|i|r)user|(?:d|r)level|ulist|flush|ial(?:clear|mark|fill)?|copy|flushini|(?:mk|rm)dir|rem(?:ini|ove)|rename|write(?:ini)?|aop|avoice|ban|channel|ignore|leave|mode|parseline|pop|protect|pvoice|say|updatenl|abook|ajinvite|alias|(?:a|c|m|t)nick|auto(?:join)?|background|beep|bindip|clipboard|colou?r|creq|ctcp(?:reply|s)|dccserver|dde(?:server)?|debug|disable|dll|dns|dqwindow|ebeeps|exit|echo|editbox|emailaddr|enable|events|filter|findtext|finger|firewall|flash|flood|fnord|font|fsend|fserve|fullname|fupdate|groups|hotlink|identd|linesep|load(?:buf)?|localinfo|log(?:view)?|mdi|menubar|noop|notify|pdcc|perform|play(?:ctrl)?|proxy|queryrn|registration|reload|remote|renwin|reset(?:error|idle)|run|save(?:buf|ini)?|scid|scon|setlayer|showmirc|signal|speak|splay|sreq|strip|switchbar|time(?:stamp|rs|r([^\\s]+)?)|tips?|titlebar|tokenize|toolbar|tray|treebar|unload|url|vc(?:add|md|rem)|vol|xyzzy|away|close(?:msg)?|username|aclear|advertise|allnick|autoconnect|aquit|back|banlist|betaup|bin2txt|bw|channels|charset|config|cycleall|de(?:halfop|s?op|voice)|dock(?:panels)?|download|echo(?:monitor|x)|edit|encoding|fakeraw|fget|fullscreen|gcmem|globalkeys|p?google|halfop|highlight|icon|inick|inlineimage|kblayout|lag|linemarker|lock|logs|msgbox|mute|nextunread|nick(?:column|list)|nmsg|np|oline|options|paths|pause|plugins|priv|quick(?:connect|save)|raw(?:log|x)|re(?:alname|connect|freshsong|join|solve|start)|scripts|scrolltext|search|sendkeys|serverlist|set(?:config|option)|show(?:adiirc|menu)|slap|sleep|sop|statusbar|tab|themes|topicbox|usernick|txt2bin|un(?:ban|ignore|notify)|update|vars|viewlog|voice|w(?:down|jump|next|pause|play))(?=\\b)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.command.symbol.mrc"
+            },
+            "2": {
+              "name": "keyword.other.command.symbol.mrc"
+            },
+            "3": {
+              "name": "keyword.control.command.mrc"
+            },
+            "4": {
+              "name": "support.variable.name.mrc"
+            }
+          },
+          "end": "(?=\\z|\\x20+\\|\\x20+[^\\x20]|\\x20}|$)",
+          "patterns": [
+            {
+              "include": "#switches"
+            },
+            {
+              "include": "#parameters"
+            }
+          ]
+        },
+        {
+          "comment": "Matches possible custom commands.",
+          "name": "meta.cmd.mrc",
+          "begin": "(?i)(?:\\x20+\\|\\x20+|(?<=else\\x20)|^\\x20*|\\)|\\G)\\x20*(?!\\|\\|\\x20)(\\/+)?([!|.]{1,2})?(?:(?![{};%&$]|if|else(?:if)?|while)([^\\s]+))",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.command.symbol.mrc"
+            },
+            "2": {
+              "name": "keyword.other.command.symbol.mrc"
+            },
+            "3": {
+              "name": "support.function.name.mrc"
+            }
+          },
+          "end": "(?=\\z|\\x20\\|\\x20[^\\x20]|\\x20}|$)",
+          "patterns": [
+            {
+              "include": "#switches"
+            },
+            {
+              "include": "#parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "switches": {
+      "patterns": [
+        {
+          "comment": "Matches - or + switches",
+          "name": "keyword.other.switch.mrc",
+          "match": "(?<=\\x20)[-+][[:alnum:]]+(?=\\s)"
+        }
+      ]
+    },
+    "menu": {
+      "patterns": [
+        {
+          "comment": "Matches menu declaration.",
+          "name": "meta.menu.code.mrc",
+          "begin": "(?i)^(menu)\\x20+((?:status|channel|query|nicklist|menubar|(?:channel)?link|@[^\\x20,]+|\\*)(?:,(?:status|channel|query|nicklist|menubar|(?:channel)?link|@[^\\x20,]+))*|\\*)\\x20+{",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.menu.mrc"
+            },
+            "2": {
+              "name": "storage.modifier.function.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|}$",
+          "patterns": [
+            {
+              "include": "#menu_content"
+            }
+          ]
+        }
+      ]
+    },
+    "menu_content": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#parameters"
+        },
+        {
+          "comment": "Matches mouse sclick dclick uclick rclick lbclick leave and drop menu items",
+          "begin": "(?:^\\x20*|\\G)\\x20*(?:\\.+)?((?:mouse|(?:s|d(?:r|m)?|u|r|lb|m)click)|leave|drop)(?:\\x20*:\\x20*)?",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.menu.item.mrc"
+            }
+          },
+          "end": "(?=\\z|\\x20}|$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches menu items",
+          "begin": "^\\x20*",
+          "end": "(?=\\z|\\x20}|$)",
+          "patterns": [
+            {
+              "include": "#parameters"
+            },
+            {
+              "begin": "(?<=:|{)",
+              "end": "(?=\\z|\\x20}|$)",
+              "patterns": [
+                {
+                  "include": "#code_content"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "events": {
+      "patterns": [
+        {
+          "comment": "Matches events: action notice text clienttext",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:action|notice|(?:client)?text):[^:]+:[^:]+:)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: active input tabcomp mscroll",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:active|input|tabcomp|mscroll):(?:\\*|#[^:]*|\\?|=|!|@[^:]*):)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: agent appactive connect connectfail disconnect dns exit load unload midiend mp3end playend songend waveend nick nosound notify unotify ping pong quit start usermode options resume song suspend",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:agent|appactive|connect(?:fail)?|disconnect|dns|exit|(?:un)?load|(?:midi|mp3|play|song|wave)end|nick|nosound|u?notify|ping|pong|quit|start|usermode|options|resume|song|suspend):)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: ban unban help dehelp deop serverop op deowner owner devoice voice invite join kick servermode mode part rawmode topic admin deadmin",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:(?:un)?ban|(?:de)?help|(?:de|server)?op|(?:de)?owner|(?:de)?voice|invite|join|kick|(?:server|raw)?mode|part|topic|(?:de)?admin):(?:\\*|#[^:]*):)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: chat ctcpreply error filercvd filesent getfail sendfail logon serv signal snotice sockclose socklisten sockopen sockread sockwrite udpread udpwrite vcmd wallops download unzip zip",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:chat|ctcpreply|error|file(?:rcvd|sent)|(?:get|send)fail|logon|serv|signal|snotice|sock(?:close|listen|open|read|write)|udp(?:read|write)|vcmd|wallops|download|(?:un)?zip):[^:]+:)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: close open",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:close|open):(?:\\*|\\?|=|!|@[^:]*):)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: dccserver",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:dccserver:(?:chat|send|fserve):)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: dialog",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:dialog:[^:]+:(?:init|close|edit|sclick|dclick|menu|scroll|mouse|rclick|drop|\\*):[\\d\\-,\\*]+:)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: hotlink",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:hotlink:[^:]+:(?:\\*|#[^:]*|\\?|=|!|@[^:]*):)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: keydown keyup",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:key(?:down|up):(?:\\*|@[^:]*):(?:\\*|\\d+(?:,\\d+)*):)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: parseline",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:parseline:(?:\\*|in|out):[^:]+:)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: raw",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(raw\\x20+[^:\\s]+:[^:]+:)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        },
+        {
+          "comment": "Matches events: raw",
+          "name": "meta.event.code.mrc",
+          "begin": "^(?i)(ctcp\\x20+[^:\\s]+:[^:]+:(?:\\*|#.*|\\?):)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.event.mrc"
+            }
+          },
+          "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
+          "patterns": [
+            {
+              "include": "#code_content"
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "patterns": [
+        {
+          "comment": "Matches dialog declaration.",
+          "name": "meta.dialog.code.mrc",
+          "begin": "(?i)^(dialog)\\x20+(?:(-l)\\x20+)?(?!-l)([^\\s]+)\\s*(?={)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.dialog.mrc"
+            },
+            "2": {
+              "name": "storage.modifier.dialog.mrc"
+            },
+            "3": {
+              "name": "entity.name.section.mrc"
+            }
+          },
+          "end": "(?<=}$)",
+          "patterns": [
+            {
+              "include": "#dialog_content"
+            }
+          ]
+        }
+      ]
+    },
+    "dialog_content": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "comment": "Matches dialog title icon size option text edit button check radio box scroll list combo icon link tab menu item",
+          "begin": "(?i)^\\x20*(title|icon|size|option|text|edit|button|check|radio|box|scroll|list|combo|icon|link|tab|menu|item)\\x20+",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.dialog.control.mrc"
+            }
+          },
+          "end": "(?<=$)",
+          "contentName": "string.quoted.double.control.mrc",
+          "patterns": [
+            {
+              "include": "#parameters"
+            }
+          ]
+        }
+      ]
+    }
+  }
 }
