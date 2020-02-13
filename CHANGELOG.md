@@ -11,7 +11,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 #### Added
 
 - CHANGELOG.md
-- Support for most current additions to mSL
+- Support for most current additions to mSL (mIRC & AdiIRC)
 
 #### Changed
 
