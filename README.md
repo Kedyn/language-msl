@@ -5,7 +5,7 @@ A repository dedicated to add mSL support to [Linguist](https://github.com/githu
 ## Features
 
 - mIRC syntax support
-- AdiIRC syntax support (WIP)
+- AdiIRC syntax support
 
 ## Authors and acknowledgment
 
