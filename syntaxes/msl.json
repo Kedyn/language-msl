@@ -1,5 +1,5 @@
 {
-  "scopeName": "source.mrc",
+  "scopeName": "source.msl",
   "patterns": [
     {
       "include": "#comments"
@@ -24,7 +24,7 @@
     "constants": {
       "patterns": [
         {
-          "name": "constant.numeric.mrc",
+          "name": "constant.numeric.msl",
           "match": "(?<=\\x20|^|\\(|,)-?\\d+(\\.\\d+)?(?=\\x20|$|\\)|,)"
         }
       ]
@@ -46,7 +46,7 @@
       "patterns": [
         {
           "comment": "Matches a documentation multi-line comment block.",
-          "name": "comment.block.documentation.mrc",
+          "name": "comment.block.documentation.msl",
           "begin": "^(?:\\x20*)(\\/\\*\\*)$",
           "end": "^(?:\\x20*)\\*\\/$",
           "patterns": [
@@ -64,7 +64,7 @@
           "match": "(?i)\\x20*\\*\\x20+(@(?:author|command|const(?:ant)?|copyright|deprecated|event|example|experimental|global|identifier|ignore|license|nobadges|param(?:eter)?|arg(?:ument)?|prop|returns?|see|switch|todo|version))\\b",
           "captures": {
             "1": {
-              "name": "storage.type.class.mrc"
+              "name": "storage.type.class.msl"
             }
           }
         }
@@ -74,7 +74,7 @@
       "patterns": [
         {
           "comment": "Matches a regular multi-line comment block.",
-          "name": "comment.block.mrc",
+          "name": "comment.block.msl",
           "begin": "^(?:\\x20*)\\/\\*",
           "end": "^(?:\\x20*)\\*\\/$"
         }
@@ -84,7 +84,7 @@
       "patterns": [
         {
           "comment": "Matches a single line comment.",
-          "name": "comment.line.semicolon.mrc",
+          "name": "comment.line.semicolon.msl",
           "begin": "(?<=^|\\x20\\|\\x20|\\G)(?:\\x20*);",
           "end": "(?=\\z|\\x20+\\|\\x20+[^\\s]|\\x20}|$)"
         }
@@ -94,7 +94,7 @@
       "patterns": [
         {
           "comment": "Matches a group.",
-          "name": "keyword.other.groupname.mrc",
+          "name": "keyword.other.groupname.msl",
           "match": "(?i)^#[^\\s]+ (on|off|end)(?:\\b)"
         }
       ]
@@ -103,17 +103,17 @@
       "patterns": [
         {
           "comment": "Matches alias declaration.",
-          "name": "meta.alias.code.mrc",
+          "name": "meta.alias.code.msl",
           "begin": "(?i)^(alias)\\x20+(?:(-l)\\x20+)?(?!-l)([^\\s]+)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "storage.type.alias.mrc"
+              "name": "storage.type.alias.msl"
             },
             "2": {
-              "name": "storage.modifier.alias.mrc"
+              "name": "storage.modifier.alias.msl"
             },
             "3": {
-              "name": "entity.name.function.mrc"
+              "name": "entity.name.function.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -150,7 +150,7 @@
     "code_block": {
       "patterns": [
         {
-          "name": "meta.code.block.mrc",
+          "name": "meta.code.block.msl",
           "begin": "{",
           "end": "}",
           "patterns": [
@@ -165,14 +165,14 @@
       "patterns": [
         {
           "comment": "Matches conditionals: if elseif while",
-          "name": "meta.conditional.mrc",
+          "name": "meta.conditional.msl",
           "begin": "(?i)(?:(?<=\\x20\\|\\x20|^|\\G)\\x20*(if|elseif|while)|(?:(?<=\\))\\x20+(&&|\\|\\|)))\\x20+(?=\\()",
           "beginCaptures": {
             "1": {
-              "name": "keyword.control.conditional.mrc"
+              "name": "keyword.control.conditional.msl"
             },
             "2": {
-              "name": "keyword.control.conditional.mrc"
+              "name": "keyword.control.conditional.msl"
             }
           },
           "end": "(?=\\)(?:\\x20|$))",
@@ -187,7 +187,7 @@
         },
         {
           "comment": "Matches conditional: else",
-          "name": "keyword.control.conditional.mrc",
+          "name": "keyword.control.conditional.msl",
           "match": "(?i)(?<=\\x20\\|\\x20|^)\\x20*(else)\\b"
         }
       ]
@@ -196,7 +196,7 @@
       "patterns": [
         {
           "comment": "Matches: == < > <= >= // \\ & isin isincs iswm iswmcs isnum isletter isalnum isalpha islower isupper === ison isop ishop isvoice isreg ischan isban isquiet isaop isavoice isignore isprotected isnotify isadmin isowner isquiet isurl",
-          "name": "keyword.operator.mrc",
+          "name": "keyword.operator.msl",
           "match": "(?i)((?<=\\x20)!?(?:==?=?|(?:<|>)=?|\\/\\/|\\\\|&|is(?:in(?:cs)?|wm(?:cs)?|(?:al)?num|letter|alpha|(?:low|upp)er|on|(?:a|h)?op|a?voice|reg|chan|ban|quiet|ignore|protected|notify|admin|owner|quiet|url))(?=\\x20|\\))|(?<=\\()!(?=\\$|%|&))"
         },
         {
@@ -208,12 +208,12 @@
       "patterns": [
         {
           "comment": "Matches regular variables, %variable",
-          "name": "variable.other.normal.mrc",
+          "name": "variable.other.normal.msl",
           "match": "(?<![^(,\\x20!])(%)[^\\x20),]+"
         },
         {
           "comment": "Matches binary variables, &variable",
-          "name": "variable.other.binary.mrc",
+          "name": "variable.other.binary.msl",
           "match": "(?<![^(,\\x20!])(&)[^\\x20),]+"
         }
       ]
@@ -249,13 +249,13 @@
           "begin": "(?i)(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?(\\+|abook|a?cos|abs|date|add(ress|tok(cs)?)|adilang|admnick|agent|alias|and|ansi2mirc|aop|asc(time)?|a?sin|a?tan|avoice|banlist|base|bfind|bindip|bit(off|on)|boldify|bvar|bytes|calias|cb|ceil|chan(nel)?|chat|chr|click|cnick|colou?r|com(call|chan|press|val)?|cosh?|count(cs)?|cpuload|crc|ctime|date|dccignore|dde|decode|decompress|decrypt|deltok|dialog|did(reg|tok|wm)?|disk(menu)?|dll(call)?|dns|dockpanels|download|duration|editbox(history)?|emoticons|encode|encodingmenu|encrypt|envvar|eval(next)?|eventtarget|exec|exists|fgetc|file|find(dir|file|tok(cs)?)|fline|floor|font|fopen|fread|fserve?|get(dir|dot|tok)?|gfx(ram)?|gmt|group|hash|height|hexcolor|hfind|hget|highlight|hmac|hmatch|hnick|hotlink|hotp|hregex|hypot|ial(chan)?|ibl|iel|ignore|iil|inellipse|ini(ck|topic)?|inpoly|input|in(round)?rect|insert|instok|int(ersect)?|invitemenu|iptype|iql|ircv3caps|is(alias|bit|dde|dir|file|lower|tok(cs)?|upper|utf)|keylocked|left|len|level|line(height|s)?|link|lock|lo(f|g(10)?)|long(fn|ip)|loop|lower|maddress|mask|matchtok(cs)?|md5|menuicon|mid|mk(log|nick)?fn|mode|mp3|msfile|msgtags|nadmnick|(nh)?nick|no(file|p?nick|t(ags|ify)?|path|qt)?|numtok|nvnick|ocolor|onpoly|op?nick|ord?|pic|play|plugins|portfree|pos(cs)?|powmod|prefix(emote|user)|puttok|qt|query|r(ands?|ead(ini)?|egml(ex)?|em(ove(cs)?|tok(cs)?)|eplace(cs|x(cs)?)?|eptok(cs)?|gb|ight|ound|nick)?|samepath|scid|scon|screen(b|hz?|shot|w)?|script|sdir|send|server(vars)?|sfile|sha(1|2|256|384|512)|shortfn|sinh|slapsmenu|sline|snick|sock|sorttok(cs)?|sound|speak|spellcheck|sqrt|statusbar|str(ip)?|style|submenu|sysdir|tanh|timer|tip|token|toolbar|topicbox|totp|trust|ulist|unsafe|upper|uptime|url(get)?|utf(de|en)code|var|vc(md)?|vol|width|wildtok(cs)?|window|wmiquery|wrap|xor|zip))\\(",
           "beginCaptures": {
             "1": {
-              "name": "keyword.other.identifier.mrc"
+              "name": "keyword.other.identifier.msl"
             }
           },
           "end": "(?i)\\)(?:\\.([^\\s|\\)|,]+))?",
           "endCaptures": {
             "1": {
-              "name": "keyword.other.identifier.property.mrc"
+              "name": "keyword.other.identifier.property.msl"
             }
           },
           "patterns": [
@@ -269,7 +269,7 @@
           "begin": "(?i)(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?calc)\\(",
           "beginCaptures": {
             "1": {
-              "name": "keyword.other.identifier.mrc"
+              "name": "keyword.other.identifier.msl"
             }
           },
           "end": "\\)",
@@ -287,7 +287,7 @@
           "begin": "(?i)(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?iif)\\(",
           "beginCaptures": {
             "1": {
-              "name": "keyword.other.identifier.mrc"
+              "name": "keyword.other.identifier.msl"
             }
           },
           "end": "\\)",
@@ -305,7 +305,7 @@
           "begin": "(?i)(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?reg(?:ex|sub(?:ex)?))\\(",
           "beginCaptures": {
             "1": {
-              "name": "keyword.other.identifier.mrc"
+              "name": "keyword.other.identifier.msl"
             }
           },
           "end": "\\)",
@@ -314,7 +314,7 @@
               "match": "(\\/(?:(?!\\/[gimsxAEDUuXSF]+?\\)).)*\\/([gimsxAEDUuXSF]+)?)",
               "captures": {
                 "1": {
-                  "name": "string.regexp.mrc"
+                  "name": "string.regexp.msl"
                 }
               }
             },
@@ -328,13 +328,13 @@
           "begin": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?~?[^\\s(),]+)\\(",
           "beginCaptures": {
             "1": {
-              "name": "support.function.name.mrc"
+              "name": "support.function.name.msl"
             }
           },
           "end": "(?i)\\)(?:\\.([^\\s|\\)|,]+))?",
           "endCaptures": {
             "1": {
-              "name": "keyword.other.identifier.property.mrc"
+              "name": "keyword.other.identifier.property.msl"
             }
           },
           "patterns": [
@@ -349,14 +349,17 @@
       "comment": "Matches $calc contents",
       "patterns": [
         {
-          "name": "keyword.operator.arithmetic.mrc",
+          "name": "keyword.operator.arithmetic.msl",
           "match": "[+\\-*/%^]"
         },
         {
-          "name": "meta.arithmetic.mrc",
-          "begin": "(<=\\()",
-          "end": "(?<=\\))",
+          "name": "meta.arithmetic.msl",
+          "begin": "\\(",
+          "end": "\\)",
           "patterns": [
+            {
+              "include": "#parameters"
+            },
             {
               "include": "#calc_content"
             }
@@ -369,7 +372,7 @@
       "patterns": [
         {
           "comment": "Identifiers: $0 $! $* $+ $N-N $active $activecid $activewid $adate $adiircdir $adiircexe $adiircini $address $admnick $agentname $agentstat $agentver $album $anick $aop $appactive $appbits $appstate $artist $asctime $audio $auto $avoice $away $awaymsg $awaytime $banmask $battery $batteryp $beta $bitrate $bits $bname $bnick $boldify $builddate bwdown $bwdownb $bwname $bwrec $bwrecb $bwsent $bwsentb $bwspeed $bwup $bwupb $calias $caller $cancel $cb $cd $chan $chanmodes $chantypes $cid $clevel $cmdbox $cmdline $comchar $comerr $comment $compact $cpucache $cpucount $cpuident $cpuload $cpumhz $cpuname $cpuvendor $cr $creq $crlf $ctime $ctimer $ctrlenter $date $day $daylight $dbuh $dbuw $dccignore $dccport $ddename $debug $devent $did $diskfree $disktotal $dlevel $dname $dock $dockpanels $dotnet $download $downloaderr $dqwindow $ebeeps $email $emailaddr $error $event $eventid $eventparms $exiting $false $feof $ferr $filename $filtered $finddirn $findfilen $flinen $frequency $fromeditbox $fulladdress $fulldate $fullname $fullscreen $fulltitle $genre $getdir $gfx $gfxram $globalidle $gmt $halted $highlight $hnick $host $hotline $hotlinepos $iaddress $ial $ident $idle $ifmatch $ifmatch2 $ignore $inmidi[.prop] $inmode $inmp3 $inpaste $insong[.prop] $inwave[.prop] $inwho $ip $isadmin $isid $iswine $kblayout $keychar $keyrpt $keyval $knick $lactive $lactivecid $lactivewid $lag $layer $leftwin $leftwincid $leftwinwid $length $lf $locked $logdir $logstamp $logstampfmt $lquitmsg $ltimer $maddress $matchkey $maxlenl $maxlenm $maxlens $me $memfree $memfreep $memtotal $menu $menubar $menucontext $menutype $mididir $mircdir $mircexe $mircini $mnick $modefirst $modelast $modespl $motherboard $mouse[.prop] $mp3dir $msgstamp $msgtags $msgx $muted $mversion $naddress $nick $nickcolumn $nickmode $network $newnick $no $notify $null $numeric $ok $onick $online $onlineserver $onlinetotal $opnick $os $osbits $osbuild $osedition $osidle $osinstalldate $osmajor $osminor $osname $osservicepack $osversion $parms $parseline $parsetype $parseutf $passivedcc $pcre $percentl $percentp $pi $playcount $player $playerhandle $pnick $port $portable $position $prefix $prefixctcp $prefixemote $prefixsys $prefixuser $progress $prop $protect $quickconnect $quitmessage $raddress $randomcolors $rating $rawbytes $rawmsg $rawmsgx $readn $realname $regerrstr $remote $result $screen $screenb $screenh $screenhz $screenw $script $scripts $scriptdir $scriptline $server $serverip $servertarget $sfstate $show $signal $site $size $snicks $snotify $sockerr $sockbr $sockname $song $songpath $sreq $ssl sslcertremotesha1 sslcertremotesha256 $sslcertsha1 $sslcertsha256 $sslcertvalid $ssldll $ssllibdll $sslready $sslversion $starting $status $statusbar $stripped $switchbar $target $tempfn $ticks $time $timeout $timestamp $timestampfmt $timezone $tips $title $titlebar $toolbar $topic $totaltracks $track $treebar $true $ulevel $updays $updating $uphours $upmins $url $usermode $username $v1 $v2 $vcmdstat $vcmdver $version $volume $volumeb $volumep $vnick $wavedir $wid $wildsite $window $year $yes $ziperr",
-          "name": "keyword.other.identifier.mrc",
+          "name": "keyword.other.identifier.msl",
           "match": "(?<=\\s|\\(!|\\(|\\,|\\.|^)\\$\\$?~?(0|\\!|&(?=$)|\\*|\\+\\+?|[1-9]+(-?([0-9]+)|[^\\s|\\)|,]+)?|active((c|w)id)?|a?date|adiirc(dir([^\\s,)]+)?|exe|ini)|address|admnick|agent(name|stat|ver)|album|anick|aop|app(active|bits|state)|artist|asctime|audio|auto|avoice|away(msg|time)?|banmask|batteryp?|beta|bit(rate|s)|bname|bnick|boldify|builddate|bw(downb?|name|recb?|sentb?|speed|upb?)|cal(ias|ler)|cancel|cb|cd|chan(modes|types)?|cid|clevel|cmd(box|line)|com(char|err|ment|pact)|cpu(cache|count|ident|load|mhz|name|vendor)|cr(eq|lf)?|ctimer?|ctrlenter|day(light)?|dbu(h|w)|dccignore|dccport|ddename|debug|devent|did|disk(free|total)|dlevel|dname|dock(panels)?|dotnet|download(err)?|dqwindow|ebeeps|email(addr)?|error|event(id|parms)?|exiting|false|fe(of|rr)|filename|filtered|find(dirn|filen)|flinen|frequency|fromeditbox|full(address|date|name|screen|title)|genre|getdir|gfx(ram)?|globalidle|gmt|halted|highlight|hnick|host|hotline(pos)?|ia(ddress|l)|ident|idle|ifmatch2?|ignore|in(midi(.(pos|length|fname|pause))?|mode|mp3|paste|song(.(pos|length|fname|pause))?|wave(.(pos|length|fname|pause))?|who)|ip|is(admin|id|wine)|kblayout|key(char|rpt|val)|knick|lactive(cid|wid)?|lag|layer|leftwin(cid|wid)?|length|lf|locked|log(dir|stamp(fmt)?)|lquitmsg|ltimer|maddress|matchkey|max(lenl|lenm|lens)|me|mem(freep?|total)|menu(bar|context|type)?|mididir|mircdir([^\\s,)]+)?|mircexe|mircini|mnick|modefirst|modelast|modespl|motherboard|mouse(.(x|y||mx|my|dx|dy|cx|cy|win|lb|key))?|mp3dir|msg(stamp|tags|x)|muted|mversion|naddress|nick(column|mode)?|network|newnick|no(tify)?|null|numeric|ok|online(server|total)?|op?nick|os(bits|build|edition|idle|installdate|major|minor|name|servicepack|version)?|parms|parse(line|type|utf)|passivedcc|pcre|percent(l|p)|pi|play(count|er(handle)?)|pnick|port(able)?|position|prefix(ctcp|emote|sys|user)?|progress|prop|protect|quickconnect|quitmessage|raddress|randomcolors|rating|raw(bytes|msgx?)|readn|realname|regerrstr|remote|result|screen(b|hz?|w)?|script(dir([^\\s,)]+)?|line|s)?|server(ip|target)?|sfstate|show|signal|site|size|snicks|snotify|sock(err|br|name)|song(path)?|sreq|ssl(cert((remote)?sha(1|256)|valid)|(lib)?dll|ready|version)?|starting|status(bar)?|stripped|switchbar|target|tempfn|ticks|time(out|stamp(fmt)?|zone)|tips|title(bar)?|toolbar|topic|totaltracks|track|treebar|true|ulevel|up(days|dating|hours|mins)|url|user(mode|name)|v1|v2|vcmd(stat|ver)|version|volume(b|p)?|vnick|wavedir|wid|wildsite|window|year|yes|ziperr)(?=\\s|\\)|,)"
         },
         {
@@ -377,24 +380,24 @@
           "match": "(?<=\\s|\\(|\\,|\\.|^)(\\$\\$?~?(?:\\?(?:[^\\s=]+)?|s?dir|hfile))(?:(=)(\"(?:[^\"])*\"))?(?=\\s|\\)|,)",
           "captures": {
             "1": {
-              "name": "keyword.other.identifier.mrc"
+              "name": "keyword.other.identifier.msl"
             },
             "2": {
-              "name": "keyword.operator.mrc"
+              "name": "keyword.operator.msl"
             },
             "3": {
-              "name": "string.quoted.double.mrc"
+              "name": "string.quoted.double.msl"
             }
           }
         },
         {
           "comment": "Identifiers: =$nick",
-          "name": "keyword.other.identifier.mrc",
+          "name": "keyword.other.identifier.msl",
           "match": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\=\\$\\$?~?nick)(?=\\b)"
         },
         {
           "comment": "Possible custom identifier",
-          "name": "support.function.name.mrc",
+          "name": "support.function.name.msl",
           "match": "(?<=\\s|\\(!|\\(|\\,|\\.|^)(\\$\\$?(?!\\x21)[^\\s(),]+)(?=\\b)"
         }
       ]
@@ -406,16 +409,16 @@
           "begin": "(?i)(?:\\x20+\\|\\x20+|(?<=else\\x20)|^\\x20*|\\)|\\G)\\x20*(\\/+)?([!|.]{1,2})?((?:win)?help|server|disconnect|join|hop|part|part(?:all)?|quit|list|links|quote|raw|(?:a|q)?me|(?:a|q|o|v|priv)?msg|action|(?:o|v)?notice|describe|query|sound|ctcp|dcc|wall(?:chops|voices)|uwho|sock(?:accept|close|list|listen|mark|open|pause|read|rename|udp|write)|b(?:read|replace|copy|set|trunc|unset|write)|com(?:close|list|open|reg)|dialog|did(?:tok)?|draw(?:copy|dot|fill|line|pic|rect|replace|rot|save|scroll|size|text)|f(?:open|list|seek|write|close)|(?:a|c|d|i|r|s)line|clear(?:all|ial)?|window|g(?:hide|(?:un)?load|move|opts|play|point|qreq|show|size|stop|talk)|h(?:add|dec|del|free|inc|load|make|save)|break|continue|goto|halt(?:def)?|return(?:ex)?|dec|inc|set|var|unset(?:all)|dec|inc|set|var|unset(?:all)?|(?:a|g|i|r)user|(?:d|r)level|ulist|flush|ial(?:clear|mark|fill)?|copy|flushini|(?:mk|rm)dir|rem(?:ini|ove)|rename|write(?:ini)?|aop|avoice|ban|channel|ignore|leave|mode|parseline|pop|protect|pvoice|say|updatenl|abook|ajinvite|alias|(?:a|c|m|t)nick|auto(?:join)?|background|beep|bindip|clipboard|colou?r|creq|ctcp(?:reply|s)|dccserver|dde(?:server)?|debug|disable|dll|dns|dqwindow|ebeeps|exit|echo|editbox|emailaddr|enable|events|filter|findtext|finger|firewall|flash|flood|fnord|font|fsend|fserve|fullname|fupdate|groups|hotlink|identd|linesep|load(?:buf)?|localinfo|log(?:view)?|mdi|menubar|noop|notify|pdcc|perform|play(?:ctrl)?|proxy|queryrn|registration|reload|remote|renwin|reset(?:error|idle)|run|save(?:buf|ini)?|scid|scon|setlayer|showmirc|signal|speak|splay|sreq|strip|switchbar|time(?:stamp|rs|r([^\\s]+)?)|tips?|titlebar|tokenize|toolbar|tray|treebar|unload|url|vc(?:add|md|rem)|vol|xyzzy|away|close(?:msg)?|username|aclear|advertise|allnick|autoconnect|aquit|back|banlist|betaup|bin2txt|bw|channels|charset|config|cycleall|de(?:halfop|s?op|voice)|dock(?:panels)?|download|echo(?:monitor|x)|edit|encoding|fakeraw|fget|fullscreen|gcmem|globalkeys|p?google|halfop|highlight|icon|inick|inlineimage|kblayout|lag|linemarker|lock|logs|msgbox|mute|nextunread|nick(?:column|list)|nmsg|np|oline|options|paths|pause|plugins|priv|quick(?:connect|save)|raw(?:log|x)|re(?:alname|connect|freshsong|join|solve|start)|scripts|scrolltext|search|sendkeys|serverlist|set(?:config|option)|show(?:adiirc|menu)|slap|sleep|sop|statusbar|tab|themes|topicbox|usernick|txt2bin|un(?:ban|ignore|notify)|update|vars|viewlog|voice|w(?:down|jump|next|pause|play))(?=\\b)",
           "beginCaptures": {
             "1": {
-              "name": "keyword.other.command.symbol.mrc"
+              "name": "keyword.other.command.symbol.msl"
             },
             "2": {
-              "name": "keyword.other.command.symbol.mrc"
+              "name": "keyword.other.command.symbol.msl"
             },
             "3": {
-              "name": "keyword.control.command.mrc"
+              "name": "keyword.control.command.msl"
             },
             "4": {
-              "name": "support.variable.name.mrc"
+              "name": "support.variable.name.msl"
             }
           },
           "end": "(?=\\z|\\x20+\\|\\x20+[^\\x20]|\\x20}|$)",
@@ -430,17 +433,17 @@
         },
         {
           "comment": "Matches possible custom commands.",
-          "name": "meta.cmd.mrc",
+          "name": "meta.cmd.msl",
           "begin": "(?i)(?:\\x20+\\|\\x20+|(?<=else\\x20)|^\\x20*|\\)|\\G)\\x20*(?!\\|\\|\\x20)(\\/+)?([!|.]{1,2})?(?:(?![{};%&$:]|if|else(?:if)?|while)([^\\s]+))",
           "beginCaptures": {
             "1": {
-              "name": "keyword.other.command.symbol.mrc"
+              "name": "keyword.other.command.symbol.msl"
             },
             "2": {
-              "name": "keyword.other.command.symbol.mrc"
+              "name": "keyword.other.command.symbol.msl"
             },
             "3": {
-              "name": "support.function.name.mrc"
+              "name": "support.function.name.msl"
             }
           },
           "end": "(?=\\z|\\x20\\|\\x20[^\\x20]|\\x20}|$)",
@@ -459,7 +462,7 @@
       "patterns": [
         {
           "comment": "Matches - or + switches",
-          "name": "keyword.other.switch.mrc",
+          "name": "keyword.other.switch.msl",
           "match": "(?<=\\x20)[-+][[:alnum:]]+(?=\\s)"
         }
       ]
@@ -468,14 +471,14 @@
       "patterns": [
         {
           "comment": "Matches menu declaration.",
-          "name": "meta.menu.code.mrc",
+          "name": "meta.menu.code.msl",
           "begin": "(?i)^(menu)\\x20+((?:status|channel|query|nicklist|menubar|(?:channel)?link|@[^\\x20,]+|\\*)(?:,(?:status|channel|query|nicklist|menubar|(?:channel)?link|@[^\\x20,]+))*|\\*)\\x20+{",
           "beginCaptures": {
             "1": {
-              "name": "storage.type.menu.mrc"
+              "name": "storage.type.menu.msl"
             },
             "2": {
-              "name": "storage.modifier.function.mrc"
+              "name": "storage.modifier.function.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|}$",
@@ -497,10 +500,10 @@
         },
         {
           "comment": "Matches mouse sclick dclick uclick rclick lbclick leave and drop menu items",
-          "begin": "(?:^\\x20*|\\G)\\x20*(?:\\.+)?((?:mouse|(?:s|d(?:r|m)?|u|r|lb|m)click)|leave|drop)(?:\\x20*:\\x20*)?",
+          "begin": "(?:^\\s*|\\G)\\x20*((?:mouse|(?:s|d(?:r|m)?|u|r|lb|m)click)|leave|drop)(?:\\x20*:\\x20*)?",
           "beginCaptures": {
             "1": {
-              "name": "keyword.other.menu.item.mrc"
+              "name": "keyword.other.menu.item.msl"
             }
           },
           "end": "(?=\\z|\\x20}|$)",
@@ -512,7 +515,7 @@
         },
         {
           "comment": "Matches menu items",
-          "begin": "^\\x20*",
+          "begin": "^\\x20*(?!$)",
           "end": "(?=\\z|\\x20}|$)",
           "patterns": [
             {
@@ -535,11 +538,11 @@
       "patterns": [
         {
           "comment": "Matches events: action notice text clienttext",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:action|notice|(?:client)?text):[^:]+:[^:]+:)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -551,11 +554,11 @@
         },
         {
           "comment": "Matches events: active input tabcomp mscroll",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:active|input|tabcomp|mscroll):(?:\\*|#[^:]*|\\?|=|!|@[^:]*):)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -567,11 +570,11 @@
         },
         {
           "comment": "Matches events: agent appactive connect connectfail disconnect dns exit load unload midiend mp3end playend songend waveend nick nosound notify unotify ping pong quit start usermode options resume song suspend",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:agent|appactive|connect(?:fail)?|disconnect|dns|exit|(?:un)?load|(?:midi|mp3|play|song|wave)end|nick|nosound|u?notify|ping|pong|quit|start|usermode|options|resume|song|suspend):)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -583,11 +586,11 @@
         },
         {
           "comment": "Matches events: ban unban help dehelp deop serverop op deowner owner devoice voice invite join kick servermode mode part rawmode topic admin deadmin",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:(?:un)?ban|(?:de)?help|(?:de|server)?op|(?:de)?owner|(?:de)?voice|invite|join|kick|(?:server|raw)?mode|part|topic|(?:de)?admin):(?:\\*|#[^:]*):)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -599,11 +602,11 @@
         },
         {
           "comment": "Matches events: chat ctcpreply error filercvd filesent getfail sendfail logon serv signal snotice sockclose socklisten sockopen sockread sockwrite udpread udpwrite vcmd wallops download unzip zip",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:chat|ctcpreply|error|file(?:rcvd|sent)|(?:get|send)fail|logon|serv|signal|snotice|sock(?:close|listen|open|read|write)|udp(?:read|write)|vcmd|wallops|download|(?:un)?zip):[^:]+:)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -615,11 +618,11 @@
         },
         {
           "comment": "Matches events: close open",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:close|open):(?:\\*|\\?|=|!|@[^:]*):)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -631,11 +634,11 @@
         },
         {
           "comment": "Matches events: dccserver",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:dccserver:(?:chat|send|fserve):)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -647,11 +650,11 @@
         },
         {
           "comment": "Matches events: dialog",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:dialog:[^:]+:(?:init|close|edit|sclick|dclick|menu|scroll|mouse|rclick|drop|\\*):[\\d\\-,\\*]+:)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -663,11 +666,11 @@
         },
         {
           "comment": "Matches events: hotlink",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:hotlink:[^:]+:(?:\\*|#[^:]*|\\?|=|!|@[^:]*):)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -678,12 +681,12 @@
           ]
         },
         {
-          "comment": "Matches events: keydown keyup",
-          "name": "meta.event.code.mrc",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:key(?:down|up):(?:\\*|@[^:]*):(?:\\*|\\d+(?:,\\d+)*):)\\s*",
+          "comment": "Matches events: keydown keyup char",
+          "name": "meta.event.code.msl",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:key(?:down|up)|char):(?:\\*|@[^:]*):(?:\\*|\\d+(?:,\\d+)*):)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -695,11 +698,11 @@
         },
         {
           "comment": "Matches events: parseline",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:parseline:(?:\\*|in|out):[^:]+:)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -711,11 +714,11 @@
         },
         {
           "comment": "Matches events: raw",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(raw\\x20+[^:\\s]+:[^:]+:)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -727,11 +730,11 @@
         },
         {
           "comment": "Matches events: raw",
-          "name": "meta.event.code.mrc",
+          "name": "meta.event.code.msl",
           "begin": "^(?i)(ctcp\\x20+[^:\\s]+:[^:]+:(?:\\*|#.*|\\?):)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "entity.name.type.event.mrc"
+              "name": "entity.name.type.event.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -747,17 +750,17 @@
       "patterns": [
         {
           "comment": "Matches dialog declaration.",
-          "name": "meta.dialog.code.mrc",
+          "name": "meta.dialog.code.msl",
           "begin": "(?i)^(dialog)\\x20+(?:(-l)\\x20+)?(?!-l)([^\\s]+)\\s*(?={)",
           "beginCaptures": {
             "1": {
-              "name": "storage.type.dialog.mrc"
+              "name": "storage.type.dialog.msl"
             },
             "2": {
-              "name": "storage.modifier.dialog.mrc"
+              "name": "storage.modifier.dialog.msl"
             },
             "3": {
-              "name": "entity.name.section.mrc"
+              "name": "entity.name.section.msl"
             }
           },
           "end": "(?<=}$)",
@@ -779,11 +782,11 @@
           "begin": "(?i)^\\x20*(title|icon|size|option|text|edit|button|check|radio|box|scroll|list|combo|icon|link|tab|menu|item)\\x20+",
           "beginCaptures": {
             "1": {
-              "name": "keyword.control.dialog.control.mrc"
+              "name": "keyword.control.dialog.control.msl"
             }
           },
           "end": "(?<=$)",
-          "contentName": "string.quoted.double.control.mrc",
+          "contentName": "string.quoted.double.control.msl",
           "patterns": [
             {
               "include": "#parameters"
