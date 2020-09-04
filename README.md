@@ -9,13 +9,11 @@ A repository dedicated to add mSL support to [Linguist](https://github.com/githu
 
 ## Authors and acknowledgment
 
-This started as clone of [Kedyn/vscode-mirc](https://github.com/Kedyn/vscode-mirc), which is a fork of [lol2k/vscode-mirc](https://github.com/lol2k/vscode-mirc), and it was put together by [gen-angry](https://github.com/gen-angry).
-
-The current grammar is a reflection of [mIRC-Scripters/mSL-VSCode-Extension](https://github.com/mIRC-Scripters/mSL-VSCode-Extension)'s grammar.
+This started as clone of [Kedyn/vscode-mirc](https://github.com/Kedyn/vscode-mirc), which is a fork of [lol2k/vscode-mirc](https://github.com/lol2k/vscode-mirc), and it was put together to work for [Linguist](https://github.com/github/linguist/) by [gen-angry](https://github.com/gen-angry).
 
 ## Development and Contibution
 
-All contributions are welcome. As previously mentioned the current grammar taken from [mIRC-Scripters/mSL-VSCode-Extension](https://github.com/mIRC-Scripters/mSL-VSCode-Extension), so we would appreciate if you head over there to help add mSL support to both Liguist and VSCode. Thank you!
+All contributions are welcome.
 
 ## License
 
