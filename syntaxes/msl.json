@@ -539,10 +539,16 @@
         {
           "comment": "Matches events: action notice text clienttext",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:action|notice|(?:client)?text):[^:]+:[^:]+:)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:action|notice|(?:client)?text):(?:(%[^:]+)|[^:]+):(?:(%[^:]+)|[^:]+):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
+            },
+            "3": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -555,10 +561,13 @@
         {
           "comment": "Matches events: active input tabcomp mscroll",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:active|input|tabcomp|mscroll):(?:\\*|#[^:]*|\\?|=|!|@[^:]*):)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:active|input|tabcomp|mscroll):(?:\\*|#[^:]*|\\?|=|!|@[^:]*|(%[^:]+)):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -587,10 +596,13 @@
         {
           "comment": "Matches events: ban unban help dehelp deop serverop op deowner owner devoice voice invite join kick servermode mode part rawmode topic admin deadmin",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:(?:un)?ban|(?:de)?help|(?:de|server)?op|(?:de)?owner|(?:de)?voice|invite|join|kick|(?:server|raw)?mode|part|topic|(?:de)?admin):(?:\\*|#[^:]*):)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:(?:un)?ban|(?:de)?help|(?:de|server)?op|(?:de)?owner|(?:de)?voice|invite|join|kick|(?:server|raw)?mode|part|topic|(?:de)?admin):(?:\\*|#[^:]*|(%[^:]+)):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -603,10 +615,13 @@
         {
           "comment": "Matches events: chat ctcpreply error filercvd filesent getfail sendfail logon serv signal snotice sockclose socklisten sockopen sockread sockwrite udpread udpwrite vcmd wallops download unzip zip",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:chat|ctcpreply|error|file(?:rcvd|sent)|(?:get|send)fail|logon|serv|signal|snotice|sock(?:close|listen|open|read|write)|udp(?:read|write)|vcmd|wallops|download|(?:un)?zip):[^:]+:)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:chat|ctcpreply|error|file(?:rcvd|sent)|(?:get|send)fail|logon|serv|signal|snotice|sock(?:close|listen|open|read|write)|udp(?:read|write)|vcmd|wallops|download|(?:un)?zip):(?:(%[^:]+)|[^:]+):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -619,10 +634,13 @@
         {
           "comment": "Matches events: close open",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:close|open):(?:\\*|\\?|=|!|@[^:]*):)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:close|open):(?:\\*|\\?|=|!|@[^:]*|(%[^:]+)):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -651,10 +669,16 @@
         {
           "comment": "Matches events: dialog",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:dialog:[^:]+:(?:init|close|edit|sclick|dclick|menu|scroll|mouse|rclick|drop|\\*):[\\d\\-,\\*]+:)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:dialog:[^:]+:(?:init|close|edit|sclick|dclick|menu|scroll|mouse|rclick|drop|\\*|(%[^:]+)):(?:(%[^:]+)|[\\d\\-,\\*]+):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
+            },
+            "3": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -667,10 +691,13 @@
         {
           "comment": "Matches events: hotlink",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:hotlink:[^:]+:(?:\\*|#[^:]*|\\?|=|!|@[^:]*):)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:hotlink:[^:]+:(?:\\*|#[^:]*|\\?|=|!|@[^:]*|(%[^:]+)):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -683,10 +710,16 @@
         {
           "comment": "Matches events: keydown keyup char",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:key(?:down|up)|char):(?:\\*|@[^:]*):(?:\\*|\\d+(?:,\\d+)*):)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:(?:key(?:down|up)|char):(?:\\*|@[^:]*|(%[^:]+)):(?:\\*|\\d+(?:,\\d+)*|(%[^:]+)):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
+            },
+            "3": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -699,10 +732,16 @@
         {
           "comment": "Matches events: parseline",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:parseline:(?:\\*|in|out):[^:]+:)\\s*",
+          "begin": "^(?i)(on\\x20+(?:me:)?[^:\\s]+:parseline:(?:\\*|in|out|(%[^:]+)):(?:(%[^:]+)|[^:]+):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
+            },
+            "3": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -715,10 +754,13 @@
         {
           "comment": "Matches events: raw",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(raw\\x20+[^:\\s]+:[^:]+:)\\s*",
+          "begin": "^(?i)(raw\\x20+[^:\\s]+:(?:(%[^:]+)|[^:]+):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
@@ -731,10 +773,16 @@
         {
           "comment": "Matches events: raw",
           "name": "meta.event.code.msl",
-          "begin": "^(?i)(ctcp\\x20+[^:\\s]+:[^:]+:(?:\\*|#.*|\\?):)\\s*",
+          "begin": "^(?i)(ctcp\\x20+[^:\\s]+:(?:(%[^:]+)|[^:]+):(?:\\*|#.*|\\?|(%[^:]+)):)\\s*",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.event.msl"
+            },
+            "2": {
+              "name": "variable.other.normal.msl"
+            },
+            "3": {
+              "name": "variable.other.normal.msl"
             }
           },
           "end": "(?i)(?=\\z|(?:^(?:on|raw|ctcp|dialog|\\#[^\\s]+|alias|menu)\\b))|(?<=}$)",
