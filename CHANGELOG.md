@@ -6,7 +6,21 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
-### [v2.0.0]
+### [v2.0.1] 9/4/2020
+
+#### Added
+
+- Variable support on events
+- ignore whole line on single line comment
+- $max $min \$donotdisturb identifiers
+- /donotdistrub command
+
+#### Changed
+
+- \$& identifier now ignores white spaces
+- README.md information
+
+### [v2.0.0] 3/24/2020
 
 #### Added
 
@@ -23,9 +37,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 #### Revomed
 
 - Unnecessary files (snippets and gitignore)
-
-**Notes:**
-After this version, the grammar will reflect those of [mIRC-Scripters/mSL-VSCode-Extension](https://github.com/mIRC-Scripters/mSL-VSCode-Extension)
 
 ### [v1.0.0] 9/26/2019
 
