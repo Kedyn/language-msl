@@ -83,6 +83,11 @@
     "comment_line": {
       "patterns": [
         {
+          "comment": "Matches single line comment, ignores the whole line if the line starts with a comment",
+          "name": "comment.line.semicolon.msl",
+          "match": "^(?:\\x20*);.*$"
+        },
+        {
           "comment": "Matches a single line comment.",
           "name": "comment.line.semicolon.msl",
           "begin": "(?<=^|\\x20\\|\\x20|\\G)(?:\\x20*);",
