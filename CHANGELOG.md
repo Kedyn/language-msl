@@ -6,12 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
-### [v2.0.1] 9/4/2020
+### [v2.0.1] 9/5/2020
 
 #### Added
 
 - Variable support on events
-- ignore whole line on single line comment
+- Ignore whole line on single line comment
 - $max $min \$donotdisturb identifiers
 - /donotdistrub command
 
@@ -29,8 +29,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 #### Changed
 
-- Changed grammar source (see notes)
-- Fixes single alias line
+- Changed grammar source
+- Single alias line
 - Sublicense to match current authors/maintainers
 - README.md information
 
