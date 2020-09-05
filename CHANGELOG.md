@@ -6,7 +6,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
-### [v2.0.1] 9/5/2020
+### [v2.1.0] 9/5/2020
 
 #### Added
 
